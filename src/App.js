@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { withStatebase } from 'react-statebase';
+import { listenAuth } from './api/auth';
+import { listenItems } from './api/database';
+import AuthButton from './components/AuthButton';
+import PasswordWidget from './components/PasswordWidget';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+	listenForSites = (userId) => {
+		this.siteListener = listenItems(
+			userId,
+			this.props.statebase.ref('siteList').set
+		)
+	}
+
+	componentDidMount() {
+		const state = this.props.statebase
+		this.authListener = listenAuth((user) => {
+			if (!user) {
+				state.ref('user').val() && state.reset()
+				return
+			}
+			state.ref('user').set(user)
+			this.listenForSites(user.uid)
+		})
+	}
+
+	componentWillUnmount() {
+		this.authListener && this.authListener()
+		this.siteListener && this.siteListener()
+	}
+
+	render() {
+		return (
+			<div>
+				<AuthButton />
+				<PasswordWidget />
+			</div>
+		);
+	}
 }
 
-export default App;
+export default withStatebase(App);
