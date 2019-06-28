@@ -2,7 +2,7 @@ import React from 'react';
 import { withStatebase } from 'react-statebase';
 import { listenAuth } from './api/auth';
 import { listenItems } from './api/database';
-import AuthButton from './components/AuthButton';
+import NavBar from './components/NavBar';
 import PasswordWidget from './components/PasswordWidget';
 
 class App extends React.Component {
@@ -15,13 +15,13 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		const state = this.props.statebase
+		const sb = this.props.statebase
 		this.authListener = listenAuth((user) => {
 			if (!user) {
-				state.ref('user').val() && state.reset()
+				sb.ref('user').val() && sb.reset()
 				return
 			}
-			state.ref('user').set(user)
+			sb.ref('user').set(user)
 			this.listenForSites(user.uid)
 		})
 	}
@@ -34,7 +34,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<AuthButton />
+				<NavBar/>
 				<PasswordWidget />
 			</div>
 		);

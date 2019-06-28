@@ -6,8 +6,10 @@ import WidgetControls from './WidgetControls';
 import Settings from './Settings';
 import GeneratedKey from './GeneratedKey';
 
+import styles from '../styles/PasswordWidget.module.css'
+
 const PasswordWidget = () => (
-	<div>
+	<div className={styles.widget}>
 		<WebsiteField/>
 		<EmailField/>
 		<SecretField/>

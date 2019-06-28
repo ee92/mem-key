@@ -4,44 +4,55 @@ import { createKey } from '../api/generate.js';
 import { addItem, updateItem } from '../api/database.js';
 
 let WidgetControls = (props) => {
-
-   const { site, email, secret } = props.statebase.ref('inputs').val()
+   const sb = props.statebase;
+   const { site, email, secret } = sb.ref('inputs').val();
+   const settings = sb.ref('settings').val();
    
-   const generate = () => {
-      const settings = props.statebase.ref('settings').val()
-      const siteList = props.statebase.ref('siteList').val()
-      let key = createKey(site, email, secret, settings)
-      props.statebase.ref('generatedKey').set(key)
-      const user = props.statebase.ref('user').val()
-      if (!user) return
-      let siteId
+   const recordMetaData = () => {
+      const user = sb.ref('user').val();
+      if (!user) return;
+      const siteList = sb.ref('siteList').val();
+      let siteId;
       for (let i=0; i<siteList.length; i++) {
-         let siteName = siteList[i].site.toLowerCase()
-         let textInput = site.toLowerCase()
+         let siteName = siteList[i].site.toLowerCase();
+         let textInput = site.toLowerCase();
          if (textInput === siteName) {
-            siteId = siteList[i].id
-            break
+            siteId = siteList[i].id;
+            break;
          }
       }
       siteId
          ? updateItem(user.uid, siteId, {site, email, settings})
-         : addItem(user.uid, {site, email, settings})
+         : addItem(user.uid, {site, email, settings});
+   }
+
+   const generate = () => {
+      if (!site || !email|| !secret) return;
+      const key = createKey(site, email, secret, settings);
+      sb.ref('generatedKey').set(key);
+      recordMetaData();
    }
 
    const toggleSettings = () => {
-      let ref = props.statebase.ref('showSettings')
-      ref.set(!ref.val())
+      const ref = sb.ref('visibility').ref('settings');
+      const visible = ref.val();
+      visible && generate();
+      ref.set(!visible);
    }
 
    return (
-      <div>
+      <div style={{display: 'flex'}}>
          <button
             disabled={!site || !email|| !secret}
             onClick={generate}
+            style={{margin: 10, padding: 10, fontSize: 16, width: '100%'}}
          >
             Generate
          </button>
-         <button onClick={toggleSettings}>
+         <button
+            onClick={toggleSettings}
+            style={{margin: 10, padding: 10, fontSize: 16, width: '100%'}}
+         >
             settings
          </button>
       </div>

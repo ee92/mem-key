@@ -1,9 +1,15 @@
 import React from 'react';
 import { withStatebase } from 'react-statebase';
 
+import Input from '@material-ui/core/Input';
+
 let Settings = (props) => {
-   const showSettings = props.statebase.ref('showSettings').val()
-   const settings = props.statebase.ref('settings')
+
+   const sb = props.statebase
+   const showSettings = sb.ref('visibility').ref('settings').val()
+   if (!showSettings) return null
+
+   const settings = sb.ref('settings')
    const isMemorable = settings.ref('isMemorable')
    const numLetters = settings.ref('length')
    const numWords = settings.ref('numWords')
@@ -11,7 +17,6 @@ let Settings = (props) => {
    const symbols = settings.ref('symbols')
    const useSalt = settings.ref('useSalt')
    const salt = settings.ref('salt')
-   if (!showSettings) return null
    return (
       <div>
          <div>
@@ -25,12 +30,18 @@ let Settings = (props) => {
                ? (
                   <div>
                      words:
-                     <input value={numWords.val()} readOnly/>
+                     <Input
+                        value={numWords.val()}
+                        onChange={(e) => numWords.set(e.target.value)}
+                     />
                   </div>
                ) : (
                   <div>
                      letters:
-                     <input value={numLetters.val()} readOnly/>
+                     <Input
+                        value={numLetters.val()}
+                        onChange={(e) => numLetters.set(e.target.value)}
+                     />
                   </div>
                )
             }
@@ -46,7 +57,10 @@ let Settings = (props) => {
                && (
                   <div>
                      symbols:
-                     <input value={symbols.val()} readOnly/>
+                     <Input
+                        value={symbols.val()}
+                        onChange={(e) => symbols.set(e.target.value)}
+                     />
                   </div>
                ) 
             }
@@ -62,7 +76,10 @@ let Settings = (props) => {
                && (
                   <div>
                      salt:
-                     <input value={salt.val()} readOnly/>
+                     <Input
+                        value={salt.val()} 
+                        onChange={(e) => salt.set(e.target.value)}
+                     />
                   </div>
                ) 
             }

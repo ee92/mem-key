@@ -1,13 +1,23 @@
 import React from 'react';
 import { withStatebase } from 'react-statebase';
 import { createKey } from '../api/generate';
-import { removeItem } from '../api/database.js';
-import Autocomplete from 'react-autocomplete';
+import { addItem, updateItem, removeItem } from '../api/database.js';
+import styles from '../styles/WebsiteField.module.css';
+import { noHover } from '../styles/Mui.module.css';
+
+import Input from '../ui/Input.js';
+
+import IconButton from '@material-ui/core/IconButton';
+import Delete from '@material-ui/icons/Delete';
+import Clear from '@material-ui/icons/Clear';
 
 let WebsiteField = props => {
-   const siteList = props.statebase.ref('siteList').val()
-   const siteInput = props.statebase.ref('inputs').ref('site')
-   const emailInput = props.statebase.ref('inputs').ref('email')
+   const sb = props.statebase
+   const { site, email, secret } = sb.ref('inputs').val()
+   const settings = sb.ref('settings').val()
+   const siteList = sb.ref('siteList').val()
+   const siteInput = sb.ref('inputs').ref('site')
+   const emailInput = sb.ref('inputs').ref('email')
 
    const setSite = e => {
       const value = e.target.value
@@ -17,54 +27,89 @@ let WebsiteField = props => {
       })
       site
          ? selectSite(site)
-         : props.statebase.ref('generatedKey').set("")
+         : sb.ref('generatedKey').set("")
    }
 
    const selectSite = site => {
       siteInput.set(site.site)
       emailInput.set(site.email)
-      if (props.statebase.ref('inputs').ref('secret').val()) {
+      sb.ref('settings').set(site.settings)
+      if (sb.ref('inputs').ref('secret').val()) {
          generate()
       }
    }
 
-   const generate = () => {
-      const {site, email, secret} = props.statebase.ref('inputs').val()
-      const settings = props.statebase.ref('settings').val()
-      const key = createKey(site, email, secret, settings)
-      props.statebase.ref('generatedKey').set(key)
+   const recordMetaData = () => {
+      const user = sb.ref('user').val();
+      if (!user) return;
+      const siteList = sb.ref('siteList').val();
+      let siteId;
+      for (let i=0; i<siteList.length; i++) {
+         const siteName = siteList[i].site.toLowerCase();
+         const textInput = site.toLowerCase();
+         if (textInput === siteName) {
+            siteId = siteList[i].id;
+            break;
+         }
+      }
+      siteId
+         ? updateItem(user.uid, siteId, {site, email, settings})
+         : addItem(user.uid, {site, email, settings});
    }
 
-   const TrashIcon = () => {
+   const generate = () => {
+      const key = createKey(site, email, secret, settings)
+      sb.ref('generatedKey').set(key)
+      recordMetaData()
+   }
+
+   const DeleteItem = () => {
       const textInput = siteInput.val().toLowerCase()
-      const user = props.statebase.ref('user').val()
+      const user = sb.ref('user').val()
       for (let i=0; i<siteList.length; i++) {
          const siteName = siteList[i].site.toLowerCase()
          if (siteName === textInput) {
             return (
-               <i
-                  className="fas fa-trash-alt"
+               <span
                   onClick={() => {
                      removeItem(user.uid, siteList[i].id)
                      siteInput.set("")
                      emailInput.set("")
                   }}
-               />
+               >
+                  <Delete/>
+               </span>
             )
          }
       }
       return null
    }
 
-   return (
-      <div>
-         <input
-            value={siteInput.val()}
-            onChange={setSite}
-            placeholder="app name/url"
-         />
-         <TrashIcon/>
-         <div>
+   const ClearInput = () => {
+      if (!siteInput.val()) return null
+      return (
+         <IconButton
+            onClick={() => {
+               siteInput.set("")
+               emailInput.set("")
+            }}
+            className={noHover}
+         >
+            <Clear/>
+         </IconButton>
+      )
+   }
+
+   const InputDropdown = () => {
+      const textInput = siteInput.val().toLowerCase()
+      for (let i=0; i<siteList.length; i++) {
+         const siteName = siteList[i].site.toLowerCase()
+         if (siteName === textInput) {
+            return null
+         }
+      }
+      return (
+         <div className={styles.dropdown}>
             {siteList
             .filter(item => item.site.includes(siteInput.val()))
             .map(item => 
@@ -73,6 +118,22 @@ let WebsiteField = props => {
                </div>
             )}
          </div>
+      )
+   }
+
+   return (
+      <div style={{display: 'flex', alignItems: 'flex-end'}}>
+         <div style={{width: '100%', position: 'relative'}}>
+            <Input
+               value={siteInput.val()}
+               onChange={setSite}
+               label="app name/url"
+               fullWidth
+               attach={<ClearInput/>}
+            />
+            <InputDropdown/>
+         </div>
+         <DeleteItem/>
       </div>
    );
 }

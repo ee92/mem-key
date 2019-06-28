@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.0.0-rc.0",
+    "@material-ui/icons": "^4.2.1",
     "firebase": "^6.1.0",
+    "material-ui-toggle-icon": "^1.0.6",
     "md5": "^2.2.1",
     "pbkdf2": "^3.0.17",
     "react": "^16.8.6",

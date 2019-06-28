@@ -1,16 +1,16 @@
 import React from 'react';
 import { withStatebase } from 'react-statebase';
+import TextField from '@material-ui/core/TextField';
 
 let EmailField = (props) => {
    let email =  props.statebase.ref('inputs').ref('email');
    return (
-      <div>
-         <input
-            value={email.val()}
-            onChange={(e) => email.set(e.target.value)}
-            placeholder="username/email"
-         />
-      </div>
+      <TextField
+         value={email.val()}
+         onChange={(e) => email.set(e.target.value)}
+         label="username/email"
+         fullWidth
+      />
    );
 }
 

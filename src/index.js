@@ -14,7 +14,6 @@ let initialState = {
 	},
 	visualHint: [],
 	generatedKey: "",
-	showSettings: false,
 	settings: {
 		isMemorable: true,
 		length: 10,
@@ -23,7 +22,12 @@ let initialState = {
 		symbols: "@#$%^&*?!",
 		useSalt: false,
 		salt: ""
-	 }
+	},
+	visibility: {
+		settings: false,
+		secret: false,
+		generatedKey: false
+	}
 }
 
 ReactDOM.render(
