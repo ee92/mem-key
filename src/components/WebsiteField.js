@@ -58,6 +58,7 @@ let WebsiteField = props => {
    }
 
    const generate = () => {
+      if (!site || !email|| !secret) return;
       const key = createKey(site, email, secret, settings)
       sb.ref('generatedKey').set(key)
       recordMetaData()
