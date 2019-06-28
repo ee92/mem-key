@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withStatebase } from 'react-statebase';
+import { hover } from '../styles/Mui.module.css';
 
 import Input from './Input';
 
@@ -30,7 +31,9 @@ const Selector = (props) => {
       >
          {props.list.map((item) => 
             <div
+               key={props.itemId(item)}
                style={styles.item}
+               className={hover}
                onClick={() => {
                   props.onSelect(item)
                   props.setOpen(false)
@@ -43,22 +46,45 @@ const Selector = (props) => {
    )
 }
 
-const Dropdown = ({list, itemText, onSelect, ...rest}) => {
+const Dropdown = (props) => {
+   const {
+      list,
+      itemText,
+      itemId,
+      onSelect,
+      InputProps, ...rest} = props
+
+
    const [open, setOpen] = useState(false)
    const [hover, setHover] = useState(false)
+   const handleEnter = (e) => {
+      switch(e.key) {
+         case "Enter":
+            setOpen(false);
+            break;
+         case "Escape":
+            setOpen(false);
+            break;
+         default:
+            setOpen(true);
+      }
+   }
+
    return (
       <div style={styles.root}>
          <Input
             InputProps={{
-               onBlur: () => !hover && setOpen(false),
+               onKeyDown: handleEnter,
                onFocus: () => setOpen(true),
-               ...rest.InputProps
+               onBlur: () => !hover && setOpen(false),
+               ...InputProps
             }}
             {...rest}
          />
          <Selector
             list={list}
             itemText={itemText}
+            itemId={itemId}
             onSelect={onSelect}
             open={open}
             setOpen={setOpen}

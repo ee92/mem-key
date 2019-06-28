@@ -10,6 +10,7 @@ let SecretField = (props) => {
    const sb = props.statebase;
    const secret = sb.ref('inputs').ref('secret');
    const hint = sb.ref('visualHint');
+   const show = sb.ref('visibility').ref('secret')
 
    const updateSecret = (e) => {
       const hintValue = visualAid(e.target.value);
@@ -17,23 +18,20 @@ let SecretField = (props) => {
       hint.set(hintValue);
    }
 
-   const InputVisibility = () => {
-      return (
-         <VisibilityToggle
-            toggle={() => console.log('toggle time')}
-            on={true}
-         />
-      );
-   }
-
    return (
       <div style={{display: 'flex', alignItems: 'baseline'}}>
          <Input
             value={secret.val()}
+            type={show.val() ? "text" : "password"}
             onChange={updateSecret}
             label="memkey"
             fullWidth
-            attach={<InputVisibility/>}
+            attach={
+               <VisibilityToggle
+                  toggle={() => show.set(!show.val())}
+                  on={show.val()}
+               />
+            }
          />
          {hint.val().map((icon) => (
             <i

@@ -103,18 +103,19 @@ let WebsiteField = props => {
    return (
       <div style={{display: 'flex', alignItems: 'flex-end'}}>
          <Dropdown
-            list={
-               siteList.filter(item => 
-                  item.site.includes(siteInput.val())
-               )
-            }
             value={siteInput.val()}
             onChange={setSite}
             label="app name/url"
             fullWidth
             itemText={(item) => item.site}
+            itemId={(item) => item.id}
             onSelect={(item) => selectSite(item)}
             attach={<ClearInput/>}
+            list={
+               siteList.filter(item => 
+                  item.site.includes(siteInput.val())
+               )
+            }
          />
          <DeleteItem/>
       </div>

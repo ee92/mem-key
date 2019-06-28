@@ -3,25 +3,32 @@ import { withStatebase } from 'react-statebase';
 import { copy } from '../api/utils.js';
 import { noHover } from '../styles/Mui.module.css';
 
-// import IconButton from '@material-ui/core/IconButton';
 import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
 
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 
 let GeneratedKey = (props) => {
-   const { site, email, secret } = props.statebase.ref('inputs').val();
-   const generatedKey = props.statebase.ref('generatedKey').val();
+
+   const sb = props.statebase
+   const { site, email, secret } = sb.ref('inputs').val();
+   const generatedKey = sb.ref('generatedKey').val();
+   const show = sb.ref('visibility').ref('generatedKey')
    if (!generatedKey || !site || !email || !secret) return null;
    return (
       <div style={{display: 'flex', alignItems: 'flex-end'}}>
          <Input
             value={generatedKey}
-            // type="password"
+            type={show.val() ? "text" : "password"}
             label={"Password for " + site}
             fullWidth
             readOnly
-            attach={<VisibilityToggle/>}
+            attach={
+               <VisibilityToggle
+                  on={show.val()}
+                  toggle={() => show.set(!show.val())}
+               />
+            }
          />
          <span
             onClick={() => copy(generatedKey)}
