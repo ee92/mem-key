@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStatebase } from 'react-statebase';
 import { login, logout } from '../api/auth.js';
-import styles from '../styles/AuthButton.module.css'
+import styles from '../styles/AuthButton.module.css';
 
 let AuthButton = (props) => {
 	let user = props.statebase.ref('user').val();
@@ -12,7 +12,7 @@ let AuthButton = (props) => {
 		>
 			{user ? "SIGN OUT" : "SIGN IN"}
 		</button>
-	)
+	);
 };
 
 export default withStatebase(AuthButton);

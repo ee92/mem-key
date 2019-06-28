@@ -8,7 +8,7 @@ const NavBar = () => {
          <h1>{`(*} MemKey`}</h1>
          <AuthButton />
       </div>
-   )
-}
+   );
+};
 
-export default NavBar
+export default NavBar;

@@ -3,15 +3,17 @@ import { withStatebase } from 'react-statebase';
 import TextField from '@material-ui/core/TextField';
 
 let EmailField = (props) => {
-   let email =  props.statebase.ref('inputs').ref('email');
+   const ref =  props.statebase.ref('inputs').ref('email');
+   const email = ref.val();
+   const setEmail = (value) => ref.set(value);
    return (
       <TextField
-         value={email.val()}
-         onChange={(e) => email.set(e.target.value)}
+         value={email}
+         onChange={(e) => setEmail(e.target.value)}
          label="username/email"
          fullWidth
       />
    );
-}
+};
 
 export default withStatebase(EmailField);
