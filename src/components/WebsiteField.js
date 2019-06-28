@@ -2,16 +2,16 @@ import React from 'react';
 import { withStatebase } from 'react-statebase';
 import { createKey } from '../api/generate';
 import { addItem, updateItem, removeItem } from '../api/database.js';
-import styles from '../styles/WebsiteField.module.css';
 import { noHover } from '../styles/Mui.module.css';
 
-import Input from '../ui/Input.js';
+import Dropdown from '../ui/Dropdown.js';
 
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import Clear from '@material-ui/icons/Clear';
 
 let WebsiteField = props => {
+
    const sb = props.statebase
    const { site, email, secret } = sb.ref('inputs').val()
    const settings = sb.ref('settings').val()
@@ -100,39 +100,22 @@ let WebsiteField = props => {
       )
    }
 
-   const InputDropdown = () => {
-      const textInput = siteInput.val().toLowerCase()
-      for (let i=0; i<siteList.length; i++) {
-         const siteName = siteList[i].site.toLowerCase()
-         if (siteName === textInput) {
-            return null
-         }
-      }
-      return (
-         <div className={styles.dropdown}>
-            {siteList
-            .filter(item => item.site.includes(siteInput.val()))
-            .map(item => 
-               <div key={item.site} onClick={() => selectSite(item)}>
-                  {item.site}
-               </div>
-            )}
-         </div>
-      )
-   }
-
    return (
       <div style={{display: 'flex', alignItems: 'flex-end'}}>
-         <div style={{width: '100%', position: 'relative'}}>
-            <Input
-               value={siteInput.val()}
-               onChange={setSite}
-               label="app name/url"
-               fullWidth
-               attach={<ClearInput/>}
-            />
-            <InputDropdown/>
-         </div>
+         <Dropdown
+            list={
+               siteList.filter(item => 
+                  item.site.includes(siteInput.val())
+               )
+            }
+            value={siteInput.val()}
+            onChange={setSite}
+            label="app name/url"
+            fullWidth
+            itemText={(item) => item.site}
+            onSelect={(item) => selectSite(item)}
+            attach={<ClearInput/>}
+         />
          <DeleteItem/>
       </div>
    );

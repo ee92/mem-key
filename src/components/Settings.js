@@ -1,7 +1,11 @@
 import React from 'react';
 import { withStatebase } from 'react-statebase';
+import { noHover } from '../styles/Mui.module.css';
 
-import Input from '@material-ui/core/Input';
+import Input from '../ui/Input';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 let Settings = (props) => {
 
@@ -20,39 +24,47 @@ let Settings = (props) => {
    return (
       <div>
          <div>
-            is memorable:
             <input
                type="checkbox"
                checked={isMemorable.val()}
                onChange={(e) => isMemorable.set(e.target.checked)}
             />
+            is memorable
             {isMemorable.val()
                ? (
-                  <div>
-                     words:
-                     <Input
-                        value={numWords.val()}
-                        onChange={(e) => numWords.set(e.target.value)}
-                     />
-                  </div>
+                  <Input
+                     value={numWords.val() + ' words'}
+                     readOnly
+                     fullWidth
+                     attach={
+                        <React.Fragment>
+                           <IconButton className={noHover}>
+                              <ExpandLess/>
+                           </IconButton>
+                           <IconButton className={noHover}>
+                              <ExpandMore/>
+                           </IconButton>
+                        </React.Fragment>
+                     }
+                  />
                ) : (
                   <div>
                      letters:
                      <Input
-                        value={numLetters.val()}
-                        onChange={(e) => numLetters.set(e.target.value)}
+                        value={numLetters.val() + ' letters'}
+                        fullWidth
                      />
                   </div>
                )
             }
          </div>
          <div>
-            include symbol:
             <input
                type="checkbox"
                checked={includeSymbol.val()}
                onChange={(e) => includeSymbol.set(e.target.checked)}
             />
+            include symbol
             {includeSymbol.val()
                && (
                   <div>
@@ -60,18 +72,19 @@ let Settings = (props) => {
                      <Input
                         value={symbols.val()}
                         onChange={(e) => symbols.set(e.target.value)}
+                        fullWidth
                      />
                   </div>
                ) 
             }
          </div>
          <div>
-            use salt:
             <input
                type="checkbox"
                checked={useSalt.val()}
                onChange={(e) => useSalt.set(e.target.checked)}
             />
+            use salt:
             {useSalt.val()
                && (
                   <div>
@@ -79,6 +92,7 @@ let Settings = (props) => {
                      <Input
                         value={salt.val()} 
                         onChange={(e) => salt.set(e.target.value)}
+                        fullWidth
                      />
                   </div>
                ) 

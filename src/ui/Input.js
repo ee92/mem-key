@@ -2,21 +2,18 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
-const Input = (props) => {
+const Input = ({attach, ...rest}) => {
    return (
       <TextField
-         value={props.value}
-         onChange={props.onChange}
-         label={props.label}
-         fullWidth={props.fullWidth}
-         readOnly={props.readOnly}
          InputProps={{
             endAdornment: (
                <InputAdornment position="end">
-                  {props.attach}
+                  {attach}
                </InputAdornment>
-            )
+            ),
+            ...rest.InputProps
          }}
+         {...rest}
       />
    );
 }

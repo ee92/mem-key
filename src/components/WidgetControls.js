@@ -4,6 +4,7 @@ import { createKey } from '../api/generate.js';
 import { addItem, updateItem } from '../api/database.js';
 
 let WidgetControls = (props) => {
+   
    const sb = props.statebase;
    const { site, email, secret } = sb.ref('inputs').val();
    const settings = sb.ref('settings').val();

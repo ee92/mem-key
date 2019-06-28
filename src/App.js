@@ -35,7 +35,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<NavBar/>
-				<PasswordWidget />
+				<PasswordWidget/>
 			</div>
 		);
 	}
