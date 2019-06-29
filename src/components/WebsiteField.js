@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase, useStatebase } from '../Test';
 import { createKey } from '../api/generate';
 import { addItem, updateItem, removeItem } from '../api/database.js';
 import { noHover } from '../styles/Mui.module.css';
@@ -11,19 +11,21 @@ import Clear from '@material-ui/icons/Clear';
 let WebsiteField = props => {
 
    const sb = props.statebase;
+   const userRef = sb.ref('user');
    const siteRef = sb.ref('inputs').ref('site');
    const emailRef = sb.ref('inputs').ref('email');
+   const secretRef = sb.ref('inputs').ref('secret');
+   const siteListRef = sb.ref('siteList');
    const settingsRef = sb.ref('settings');
+   const keyRef = sb.ref('generatedKey');
 
-   const user = sb.ref('user').val();
-   const settings = settingsRef.val();
-   const siteList = sb.ref('siteList').val();
-   const { site, email, secret } = sb.ref('inputs').val();
-
-   const setSite = (value) => siteRef.set(value);
-   const setEmail = (value) => emailRef.set(value);
-   const setSettings = (value) => settingsRef.set(value);
-   const setKey = (value) => sb.ref('generatedKey').set(value);
+   const [user] = useStatebase(userRef);
+   const [site, setSite] = useStatebase(siteRef);
+   const [email, setEmail] = useStatebase(emailRef);
+   const [secret] = useStatebase(secretRef);
+   const [siteList] = useStatebase(siteListRef);
+   const [settings, setSettings] = useStatebase(settingsRef);
+   const [, setKey] = useStatebase(keyRef);
 
    const findSite = (value) => {
       return siteList.find((item) => {

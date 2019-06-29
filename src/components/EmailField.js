@@ -1,11 +1,10 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase, useStatebase } from '../Test';
 import TextField from '@material-ui/core/TextField';
 
 let EmailField = (props) => {
    const ref =  props.statebase.ref('inputs').ref('email');
-   const email = ref.val();
-   const setEmail = (value) => ref.set(value);
+   const [email, setEmail] = useStatebase(ref);
    return (
       <TextField
          value={email}

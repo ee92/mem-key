@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withStatebase } from 'react-statebase';
 import { hover } from '../styles/Mui.module.css';
 
 import Input from './Input';
@@ -94,4 +93,4 @@ const Dropdown = (props) => {
    )
 }
 
-export default withStatebase(Dropdown);
+export default Dropdown;

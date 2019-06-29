@@ -1,10 +1,11 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase, useStatebase } from '../Test';
 import { login, logout } from '../api/auth.js';
 import styles from '../styles/AuthButton.module.css';
 
 let AuthButton = (props) => {
-	let user = props.statebase.ref('user').val();
+	const ref = props.statebase.ref('user');
+	const [user] = useStatebase(ref);
 	return (
 		<button
 			onClick={user ? logout : login}

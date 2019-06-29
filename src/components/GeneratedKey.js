@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase, useStatebase } from '../Test';
 import { copy } from '../api/utils.js';
 import { noHover } from '../styles/Mui.module.css';
 import Input from '../ui/Input.js';
@@ -9,14 +9,21 @@ import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
 let GeneratedKey = (props) => {
 
    const sb = props.statebase;
-   const { site, email, secret } = sb.ref('inputs').val();
-   const key = sb.ref('generatedKey').val();
+   const siteRef = sb.ref('inputs').ref('site');
+   const emailRef = sb.ref('inputs').ref('email');
+   const secretRef = sb.ref('inputs').ref('secret');
+   const keyRef = sb.ref('generatedKey');
+   const showRef = sb.ref('visibility').ref('generatedKey');
+
+   const [site] = useStatebase(siteRef);
+   const [email] = useStatebase(emailRef);
+   const [secret] = useStatebase(secretRef);
+   const [key] = useStatebase(keyRef)
+   const [show, setShow] = useStatebase(showRef)
+
    if (!key || !site || !email || !secret) return null;
 
-   const showRef = sb.ref('visibility').ref('generatedKey');
-   const show = showRef.val();
-
-   const toggleShow = () => showRef.set(!show);
+   const toggleShow = () => setShow(!show);
    const clipboard = () => copy(key);
 
    return (

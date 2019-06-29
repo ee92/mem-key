@@ -1,14 +1,28 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase, useStatebase } from '../Test';
 import { createKey } from '../api/generate.js';
 import { addItem, updateItem } from '../api/database.js';
 
 let WidgetControls = (props) => {
    
    const sb = props.statebase;
-   const { site, email, secret } = sb.ref('inputs').val();
-   const settings = sb.ref('settings').val();
-   const siteList = sb.ref('siteList').val();
+   const userRef = sb.ref('user');
+   const siteRef = sb.ref('inputs').ref('site');
+   const emailRef = sb.ref('inputs').ref('email');
+   const secretRef = sb.ref('inputs').ref('secret');
+   const showSettingsRef = sb.ref('visibility').ref('settings');
+   const settingsRef = sb.ref('settings');
+   const siteListRef = sb.ref('siteList');
+   const keyRef = sb.ref('generatedKey');
+
+   const [user] = useStatebase(userRef);
+   const [site] = useStatebase(siteRef);
+   const [email] = useStatebase(emailRef);
+   const [secret] = useStatebase(secretRef);
+   const [settings] = useStatebase(settingsRef);
+   const [siteList] = useStatebase(siteListRef);
+   const [, setKey] = useStatebase(keyRef);
+   const [show, setShow] = useStatebase(showSettingsRef);
 
    const findSite = (value) => {
       return siteList.find((item) => {
@@ -19,12 +33,11 @@ let WidgetControls = (props) => {
    const generate = () => {
       if (!site || !email|| !secret) return;
       const key = createKey(site, email, secret, settings);
-      sb.ref('generatedKey').set(key);
+      setKey(key);
       recordMetaData();
    }
    
    const recordMetaData = () => {
-      const user = sb.ref('user').val();
       if (!user) return;
       const existingSite = findSite(site);
       existingSite
@@ -33,10 +46,9 @@ let WidgetControls = (props) => {
    }
 
    const toggleSettings = () => {
-      const ref = sb.ref('visibility').ref('settings');
-      const visible = ref.val();
-      visible && generate();
-      ref.set(!visible);
+      console.log(show)
+      show && generate();
+      setShow(!show);
    }
 
    return (

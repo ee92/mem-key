@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase } from './Test';
 import { listenAuth } from './api/auth';
 import { listenItems } from './api/database';
 import NavBar from './components/NavBar';

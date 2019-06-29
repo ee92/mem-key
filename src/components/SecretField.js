@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase, useStatebase } from '../Test';
 import { visualAid } from '../api/generate.js';
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
@@ -11,23 +11,23 @@ let SecretField = (props) => {
    const showRef = sb.ref('visibility').ref('secret');
    const hintRef = sb.ref('visualHint');
 
-   const secret = secretRef.val();
-   const show = showRef.val();
-   const hint = hintRef.val()
+   const [secret, setSecret] = useStatebase(secretRef);
+   const [show, setShow] = useStatebase(showRef);
+   const [hint, setHint] = useStatebase(hintRef);
 
-   const toggleShow = () => showRef.set(!show);
-   const updateSecret = (e) => {
+   const toggleShow = () => setShow(!show);
+   const handleInput = (e) => {
       const hintValue = visualAid(e.target.value);
-      secretRef.set(e.target.value);
-      hintRef.set(hintValue);
+      setSecret(e.target.value);
+      setHint(hintValue);
    }
-
+   
    return (
       <div style={{display: 'flex', alignItems: 'baseline'}}>
          <Input
             value={secret}
             type={show ? "text" : "password"}
-            onChange={updateSecret}
+            onChange={handleInput}
             label="memkey"
             fullWidth
             attach={

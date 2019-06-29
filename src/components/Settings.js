@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStatebase } from 'react-statebase';
+import { withStatebase } from '../Test';
 import { noHover } from '../styles/Mui.module.css';
 
 import Input from '../ui/Input';
@@ -14,50 +14,60 @@ let Settings = (props) => {
    if (!showSettings) return null
 
    const settings = sb.ref('settings')
-   const isMemorable = settings.ref('isMemorable')
-   const numLetters = settings.ref('length')
-   const numWords = settings.ref('numWords')
+
    const includeSymbol = settings.ref('includeSymbol')
    const symbols = settings.ref('symbols')
    const useSalt = settings.ref('useSalt')
    const salt = settings.ref('salt')
-   return (
-      <div>
+
+   const LengthSettings = () => {
+      const memRef = settings.ref('isMemorable')
+      const lettersRef = settings.ref('length')
+      const wordsRef = settings.ref('numWords')
+
+      const memorable = memRef.val()
+      const letters = lettersRef.val()
+      const words = wordsRef.val()
+
+      const setMemorable = (e) => memRef.set(e.target.checked)
+
+      const Increment = () => {
+         const ref = memorable ? wordsRef : lettersRef;
+         const incUp = () => ref.set(ref.val() + 1);
+         const incDown = () => ref.set(ref.val() - 1);
+         return (
+            <React.Fragment>
+               <IconButton className={noHover} onClick={incUp}>
+                  <ExpandLess/>
+               </IconButton>
+               <IconButton className={noHover} onClick={incDown}>
+                  <ExpandMore/>
+               </IconButton>
+            </React.Fragment>
+         )
+      }
+
+      return (
          <div>
             <input
                type="checkbox"
-               checked={isMemorable.val()}
-               onChange={(e) => isMemorable.set(e.target.checked)}
+               checked={memorable}
+               onChange={setMemorable}
             />
-            is memorable
-            {isMemorable.val()
-               ? (
-                  <Input
-                     value={numWords.val() + ' words'}
-                     readOnly
-                     fullWidth
-                     attach={
-                        <React.Fragment>
-                           <IconButton className={noHover}>
-                              <ExpandLess/>
-                           </IconButton>
-                           <IconButton className={noHover}>
-                              <ExpandMore/>
-                           </IconButton>
-                        </React.Fragment>
-                     }
-                  />
-               ) : (
-                  <div>
-                     letters:
-                     <Input
-                        value={numLetters.val() + ' letters'}
-                        fullWidth
-                     />
-                  </div>
-               )
-            }
+            <label>is memorable</label>
+            <Input
+               value={memorable ? `${words} words` : `${letters} letters`}
+               readOnly
+               fullWidth
+               attach={<Increment/>}
+            />
          </div>
+      )
+   }
+
+   return (
+      <div>
+         <LengthSettings/>
          <div>
             <input
                type="checkbox"
@@ -68,7 +78,6 @@ let Settings = (props) => {
             {includeSymbol.val()
                && (
                   <div>
-                     symbols:
                      <Input
                         value={symbols.val()}
                         onChange={(e) => symbols.set(e.target.value)}
@@ -88,7 +97,6 @@ let Settings = (props) => {
             {useSalt.val()
                && (
                   <div>
-                     salt:
                      <Input
                         value={salt.val()} 
                         onChange={(e) => salt.set(e.target.value)}
