@@ -4,8 +4,7 @@ import { visualAid } from '../api/generate.js';
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 
-let SecretField = (props) => {
-
+const SecretField = (props) => {
    const sb = props.statebase;
    const secretRef = sb.ref('inputs').ref('secret');
    const showRef = sb.ref('visibility').ref('secret');

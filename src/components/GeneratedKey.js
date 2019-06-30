@@ -6,7 +6,7 @@ import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
 
-let GeneratedKey = (props) => {
+const GeneratedKey = (props) => {
 
    const sb = props.statebase;
    const siteRef = sb.ref('inputs').ref('site');

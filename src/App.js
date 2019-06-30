@@ -1,44 +1,41 @@
-import React from 'react';
-import { withStatebase } from './Test';
+import React, { useEffect } from 'react';
+import { withStatebase, useStatebase } from './Test';
 import { listenAuth } from './api/auth';
 import { listenItems } from './api/database';
 import NavBar from './components/NavBar';
 import PasswordWidget from './components/PasswordWidget';
 
-class App extends React.Component {
+const App = (props) => {
+	const sb = props.statebase;
+	const userRef = sb.ref('user');
+	const siteListRef = sb.ref('siteList');
 
-	listenForSites = (userId) => {
-		this.siteListener = listenItems(
-			userId,
-			this.props.statebase.ref('siteList').set
-		)
-	}
+	const [user, setUser] = useStatebase(userRef);
+	const [, setSiteList] = useStatebase(siteListRef);
 
-	componentDidMount() {
-		const sb = this.props.statebase
-		this.authListener = listenAuth((user) => {
-			if (!user) {
-				sb.ref('user').val() && sb.reset()
+	useEffect(() => {
+		let siteListener
+		const authListener = listenAuth((auth) => {
+			if (!auth) {
+				user && sb.reset()
 				return
 			}
-			sb.ref('user').set(user)
-			this.listenForSites(user.uid)
+			setUser(auth)
+			siteListener = listenItems(auth.uid, setSiteList)
 		})
-	}
+		return () => {
+			authListener && authListener()
+			siteListener && siteListener()
+		}
+	// eslint-disable-next-line
+	}, [])
 
-	componentWillUnmount() {
-		this.authListener && this.authListener()
-		this.siteListener && this.siteListener()
-	}
-
-	render() {
-		return (
-			<div>
-				<NavBar/>
-				<PasswordWidget/>
-			</div>
-		);
-	}
+	return (
+		<div>
+			<NavBar/>
+			<PasswordWidget/>
+		</div>
+	);
 }
 
 export default withStatebase(App);

@@ -3,7 +3,7 @@ import createState from 'statebase';
 
 const Statebase = React.createContext(null);
 
-export class StatebaseProvider extends React.Component {
+export class StatebaseProvider extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = createState(props.initialState);
@@ -18,7 +18,7 @@ export class StatebaseProvider extends React.Component {
 }
 
 export const withStatebase = (Component) => {
-	return class extends React.Component {
+	return class extends React.PureComponent {
 		render () {
 			return (
 				<Statebase.Consumer>
@@ -33,6 +33,12 @@ export const withStatebase = (Component) => {
 
 export const useStatebase = (ref) => {
    const [state, setState] = useState(ref.val())
-   useEffect(() => ref.listen((snap) => setState(snap.val()), []))
+   useEffect(() => {
+		const unsub = ref.listen((snap) => {
+			setState(snap.val())
+		})
+		return () => unsub && unsub()
+	// eslint-disable-next-line
+	}, [])
    return [state, ref.set]
 }

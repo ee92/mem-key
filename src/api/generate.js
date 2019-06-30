@@ -2,8 +2,6 @@ import pbkdf2 from 'pbkdf2';
 import md5 from 'md5';
 import wordList from '../word-list.js';
 
-// const wordList = ['a', 'b', 'c']
-
 export function createKey(site, email, secret, settings){
 	const alfanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	const { isMemorable, length, useSalt, salt, numWords, symbols, includeSymbol } = settings;

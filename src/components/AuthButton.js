@@ -3,8 +3,9 @@ import { withStatebase, useStatebase } from '../Test';
 import { login, logout } from '../api/auth.js';
 import styles from '../styles/AuthButton.module.css';
 
-let AuthButton = (props) => {
-	const ref = props.statebase.ref('user');
+const AuthButton = (props) => {
+	const sb = props.statebase
+	const ref = sb.ref('user');
 	const [user] = useStatebase(ref);
 	return (
 		<button

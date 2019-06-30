@@ -2,7 +2,7 @@ import React from 'react';
 import { withStatebase, useStatebase } from '../Test';
 import TextField from '@material-ui/core/TextField';
 
-let EmailField = (props) => {
+const EmailField = (props) => {
    const ref =  props.statebase.ref('inputs').ref('email');
    const [email, setEmail] = useStatebase(ref);
    return (
