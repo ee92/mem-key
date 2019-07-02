@@ -1,12 +1,13 @@
 import React from 'react';
-import { withStatebase, useStatebase } from '../Test';
+import { withStatebase, useStatebase } from 'react-statebase';
 import { copy } from '../api/utils.js';
-import { noHover } from '../styles/Mui.module.css';
+import { noHover, noMargin } from '../styles/Mui.module.css';
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
+import { IconButton } from '@material-ui/core';
 
-const GeneratedKey = (props) => {
+const WidgetGeneratedKey = (props) => {
 
    const sb = props.statebase;
    const siteRef = sb.ref('inputs').ref('site');
@@ -41,14 +42,14 @@ const GeneratedKey = (props) => {
                />
             }
          />
-         <span
+         <IconButton
             onClick={clipboard}
-            className={noHover}
+            className={`${noHover} ${noMargin}`}
          >
             <AssignmentReturned/>
-         </span>
+         </IconButton>
       </div>
    );
 };
 
-export default withStatebase(GeneratedKey);
+export default withStatebase(WidgetGeneratedKey);

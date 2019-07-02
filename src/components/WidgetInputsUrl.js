@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { withStatebase, useStatebase } from '../Test';
+import { withStatebase, useStatebase } from 'react-statebase';
 import { removeItem } from '../api/database.js';
-import { noHover } from '../styles/Mui.module.css';
+import { noHover, gray, red } from '../styles/Mui.module.css';
 import Dropdown from '../ui/Dropdown.js';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import Clear from '@material-ui/icons/Clear';
 
-const WebsiteField = props => {
+const WidgetInputsUrl = props => {
    const sb = props.statebase;
    const userRef = sb.ref('user');
    const siteRef = sb.ref('inputs').ref('site');
@@ -57,6 +57,7 @@ const WebsiteField = props => {
                setSite("")
                setEmail("")
             }}
+            className={`${gray} ${red}`}
          >
             <Delete/>
          </span>
@@ -98,4 +99,4 @@ const WebsiteField = props => {
    );
 }
 
-export default withStatebase(WebsiteField);
+export default withStatebase(WidgetInputsUrl);

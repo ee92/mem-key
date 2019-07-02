@@ -51,3 +51,7 @@ export function visualAid(text) {
 	}
 	return aid
 }
+export function randomWord() {
+	let word = wordList[Math.floor(Math.random() * wordList.length)];
+	return word;
+ }

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { withStatebase, useStatebase } from './Test';
+import { withStatebase, useStatebase } from 'react-statebase';
 import { listenAuth } from './api/auth';
 import { listenItems } from './api/database';
 import NavBar from './components/NavBar';
-import PasswordWidget from './components/PasswordWidget';
+import Widget from './components/Widget';
 
 const App = (props) => {
 	const sb = props.statebase;
@@ -33,7 +33,7 @@ const App = (props) => {
 	return (
 		<div>
 			<NavBar/>
-			<PasswordWidget/>
+			<Widget/>
 		</div>
 	);
 }

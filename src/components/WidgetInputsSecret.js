@@ -1,10 +1,10 @@
 import React from 'react';
-import { withStatebase, useStatebase } from '../Test';
+import { withStatebase, useStatebase } from 'react-statebase';
 import { visualAid } from '../api/generate.js';
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 
-const SecretField = (props) => {
+const WidgetInputsSecret = (props) => {
    const sb = props.statebase;
    const secretRef = sb.ref('inputs').ref('secret');
    const showRef = sb.ref('visibility').ref('secret');
@@ -52,4 +52,4 @@ const SecretField = (props) => {
    );
 };
 
-export default withStatebase(SecretField);
+export default withStatebase(WidgetInputsSecret);

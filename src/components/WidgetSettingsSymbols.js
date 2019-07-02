@@ -1,8 +1,10 @@
 import React from 'react';
-import { withStatebase, useStatebase } from '../Test';
+import { withStatebase, useStatebase } from 'react-statebase';
 import Input from '../ui/Input.js';
 
-const SymbolSetting = (props) => {
+import Switch from '@material-ui/core/Switch';
+
+const WidgetSettingsSymbol = (props) => {
    const settings = props.statebase.ref('settings');
    const includeSymbolRef = settings.ref('includeSymbol');
    const symbolsRef = settings.ref('symbols');
@@ -11,16 +13,20 @@ const SymbolSetting = (props) => {
    const [symbols, setSymbols] = useStatebase(symbolsRef);
 
    const handleToggle = (e) => setIncludeSymbol(e.target.checked);
-   const handleInput = (e) => setSymbols(e.target.value);
+   const handleInput = (e) => {
+      const re = /^[!@#$%^&*?]+$/;
+      const value = e.target.value;
+      re.test(value) && setSymbols(value);
+   }
 
    return (
       <div>
-         <input
-            type="checkbox"
+         <Switch
             checked={includeSymbol}
             onChange={handleToggle}
+            color="primary"
          />
-         <label>include symbol</label>
+         <label>Symbols</label>
          {includeSymbol && <Input
             value={symbols}
             onChange={handleInput}
@@ -29,5 +35,4 @@ const SymbolSetting = (props) => {
       </div>
    )
 }
-
-export default withStatebase(SymbolSetting);
+export default withStatebase(WidgetSettingsSymbol);

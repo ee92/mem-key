@@ -1,13 +1,11 @@
 import React from 'react';
-import { withStatebase, useStatebase } from '../Test';
+import { withStatebase, useStatebase } from 'react-statebase';
 import { createKey } from '../api/generate.js';
 import { addItem, updateItem } from '../api/database.js';
 
 const WidgetControls = (props) => {
    const sb = props.statebase;
-   const siteRef = sb.ref('inputs').ref('site');
-   const emailRef = sb.ref('inputs').ref('email');
-   const secretRef = sb.ref('inputs').ref('secret');
+   const inputsRef = sb.ref('inputs')
    const showSettingsRef = sb.ref('visibility').ref('settings');
    const settingsRef = sb.ref('settings');
    const siteListRef = sb.ref('siteList');
@@ -15,9 +13,7 @@ const WidgetControls = (props) => {
    const userRef = sb.ref('user');
 
    const [user] = useStatebase(userRef);
-   const [site] = useStatebase(siteRef);
-   const [email] = useStatebase(emailRef);
-   const [secret] = useStatebase(secretRef);
+   const [{site, email, secret}] = useStatebase(inputsRef);
    const [settings] = useStatebase(settingsRef);
    const [siteList] = useStatebase(siteListRef);
    const [, setKey] = useStatebase(keyRef);

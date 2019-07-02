@@ -1,8 +1,8 @@
 import React from 'react';
-import { withStatebase, useStatebase } from '../Test';
+import { withStatebase, useStatebase } from 'react-statebase';
 import TextField from '@material-ui/core/TextField';
 
-const EmailField = (props) => {
+const WidgetInputsEmail = (props) => {
    const ref =  props.statebase.ref('inputs').ref('email');
    const [email, setEmail] = useStatebase(ref);
    return (
@@ -15,4 +15,4 @@ const EmailField = (props) => {
    );
 };
 
-export default withStatebase(EmailField);
+export default withStatebase(WidgetInputsEmail);
