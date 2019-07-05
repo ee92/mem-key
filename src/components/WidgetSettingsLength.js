@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import React from 'react';
+import useGlobal from '../api/store';
 import { noHover } from '../styles/Mui.module.css';
 
 import Input from '../ui/Input';
@@ -26,16 +26,11 @@ const Increment = props => (
    />
 )
 
-const WidgetSettingsLength = (props) => {
-   const sb = props.statebase;
-   const settings = sb.ref('settings');
-   const memRef = settings.ref('isMemorable');
-   const lettersRef = settings.ref('length');
-   const wordsRef = settings.ref('numWords');
+const WidgetSettingsLength = () => {
 
-   const [memorable, setMemorable] = useStatebase(memRef);
-   const [letters, setLetters] = useStatebase(lettersRef);
-   const [words, setWords] = useStatebase(wordsRef);
+   const [memorable, setMemorable] = useGlobal('settings.isMemorable');
+   const [letters, setLetters] = useGlobal('settings.length');
+   const [words, setWords] = useGlobal('settings.numWords');
 
    const [num, set] = memorable 
       ? [words, setWords]
@@ -45,10 +40,6 @@ const WidgetSettingsLength = (props) => {
    const incUp = () => set(num + 1);
    const incDown = () => set(num - 1);
    const handleToggle = (e) => setMemorable(e.target.checked);
-
-   useEffect(() => {
-      console.log(words, letters)
-   }, [words, letters])
 
    return (
       <div>
@@ -67,4 +58,4 @@ const WidgetSettingsLength = (props) => {
    )
 }
 
-export default withStatebase(WidgetSettingsLength);
+export default WidgetSettingsLength;

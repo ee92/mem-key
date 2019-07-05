@@ -1,23 +1,16 @@
 import React from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from '../api/store';
 import { createKey } from '../api/generate.js';
 import { addItem, updateItem } from '../api/database.js';
 
-const WidgetControls = (props) => {
-   const sb = props.statebase;
-   const inputsRef = sb.ref('inputs')
-   const showSettingsRef = sb.ref('visibility').ref('settings');
-   const settingsRef = sb.ref('settings');
-   const siteListRef = sb.ref('siteList');
-   const keyRef = sb.ref('generatedKey');
-   const userRef = sb.ref('user');
+const WidgetControls = () => {
 
-   const [user] = useStatebase(userRef);
-   const [{site, email, secret}] = useStatebase(inputsRef);
-   const [settings] = useStatebase(settingsRef);
-   const [siteList] = useStatebase(siteListRef);
-   const [, setKey] = useStatebase(keyRef);
-   const [show, setShow] = useStatebase(showSettingsRef);
+   const [user] = useGlobal('user');
+   const [{site, email, secret}] = useGlobal('inputs');
+   const [settings] = useGlobal('settings');
+   const [siteList] = useGlobal('siteList');
+   const [, setKey] = useGlobal('generatedKey');
+   const [show, setShow] = useGlobal('visibility.settings');
 
 
    const findSite = (value) => {
@@ -44,7 +37,6 @@ const WidgetControls = (props) => {
    }
 
    const toggleSettings = () => {
-      // show && generate();
       setShow(!show);
    }
 
@@ -67,4 +59,4 @@ const WidgetControls = (props) => {
    );
 };
 
-export default withStatebase(WidgetControls);
+export default WidgetControls;

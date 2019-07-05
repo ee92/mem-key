@@ -1,18 +1,15 @@
 import React from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from '../api/store';
 import Input from '../ui/Input.js';
 
 import Switch from '@material-ui/core/Switch';
 
-const WidgetSettingsSymbol = (props) => {
-   const settings = props.statebase.ref('settings');
-   const includeSymbolRef = settings.ref('includeSymbol');
-   const symbolsRef = settings.ref('symbols');
+const WidgetSettingsSymbol = () => {
 
-   const [includeSymbol, setIncludeSymbol] = useStatebase(includeSymbolRef);
-   const [symbols, setSymbols] = useStatebase(symbolsRef);
+   const [usesSymbol, setUsesSymbol] = useGlobal('settings.includeSymbol');
+   const [symbols, setSymbols] = useGlobal('settings.symbols');
 
-   const handleToggle = (e) => setIncludeSymbol(e.target.checked);
+   const handleToggle = (e) => setUsesSymbol(e.target.checked);
    const handleInput = (e) => {
       const re = /^[!@#$%^&*?]+$/;
       const value = e.target.value;
@@ -22,12 +19,12 @@ const WidgetSettingsSymbol = (props) => {
    return (
       <div>
          <Switch
-            checked={includeSymbol}
+            checked={usesSymbol}
             onChange={handleToggle}
             color="primary"
          />
          <label>Symbols</label>
-         {includeSymbol && <Input
+         {usesSymbol && <Input
             value={symbols}
             onChange={handleInput}
             fullWidth
@@ -35,4 +32,4 @@ const WidgetSettingsSymbol = (props) => {
       </div>
    )
 }
-export default withStatebase(WidgetSettingsSymbol);
+export default WidgetSettingsSymbol;

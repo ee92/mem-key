@@ -1,20 +1,16 @@
 import React from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from '../api/store';
 import { visualAid } from '../api/generate.js';
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 
-const WidgetInputsSecret = (props) => {
-   const sb = props.statebase;
-   const secretRef = sb.ref('inputs').ref('secret');
-   const showRef = sb.ref('visibility').ref('secret');
-   const hintRef = sb.ref('visualHint');
+const WidgetInputsSecret = () => {
 
-   const [secret, setSecret] = useStatebase(secretRef);
-   const [show, setShow] = useStatebase(showRef);
-   const [hint, setHint] = useStatebase(hintRef);
+   const [secret, setSecret] = useGlobal('inputs.secret');
+   const [showSecret, setShowSecret] = useGlobal('visibility.secret');
+   const [hint, setHint] = useGlobal('visualHint');
 
-   const toggleShow = () => setShow(!show);
+   const toggleShow = () => setShowSecret(!showSecret);
    const handleInput = (e) => {
       const hintValue = visualAid(e.target.value);
       setSecret(e.target.value);
@@ -25,14 +21,14 @@ const WidgetInputsSecret = (props) => {
       <div style={{display: 'flex', alignItems: 'baseline'}}>
          <Input
             value={secret}
-            type={show ? "text" : "password"}
+            type={showSecret ? "text" : "password"}
             onChange={handleInput}
             label="memkey"
             fullWidth
             attach={
                <VisibilityToggle
                   toggle={toggleShow}
-                  on={show}
+                  on={showSecret}
                />
             }
          />
@@ -52,4 +48,4 @@ const WidgetInputsSecret = (props) => {
    );
 };
 
-export default withStatebase(WidgetInputsSecret);
+export default WidgetInputsSecret;

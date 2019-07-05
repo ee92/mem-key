@@ -1,12 +1,10 @@
 import React from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from '../api/store';
 import { login, logout } from '../api/auth.js';
 import styles from '../styles/AuthButton.module.css';
 
-const AuthButton = (props) => {
-	const sb = props.statebase;
-	const userRef = sb.ref('user');
-	const [user] = useStatebase(userRef);
+const AuthButton = () => {
+	const [user] = useGlobal('user');
 	return (
 		<button
 			onClick={user ? logout : login}
@@ -17,4 +15,4 @@ const AuthButton = (props) => {
 	);
 };
 
-export default withStatebase(AuthButton);
+export default AuthButton;

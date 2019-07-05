@@ -11,14 +11,16 @@ const Adornment = ({attach}) => {
    )
 }
 
-const Input = ({attach, InputProps, ...rest}) => (
+const Input = ({attach, InputProps, children, ...rest}) => (
    <TextField
       InputProps={{
          endAdornment: <Adornment attach={attach}/>,
          ...InputProps
       }}
       {...rest}
-   />
+   >
+      {children}
+   </TextField>
 )
 
 export default Input;

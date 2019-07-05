@@ -1,10 +1,9 @@
 import React from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from '../api/store';
 import TextField from '@material-ui/core/TextField';
 
-const WidgetInputsEmail = (props) => {
-   const ref =  props.statebase.ref('inputs').ref('email');
-   const [email, setEmail] = useStatebase(ref);
+const WidgetInputsEmail = () => {
+   const [email, setEmail] = useGlobal('inputs.email');
    return (
       <TextField
          value={email}
@@ -15,4 +14,4 @@ const WidgetInputsEmail = (props) => {
    );
 };
 
-export default withStatebase(WidgetInputsEmail);
+export default WidgetInputsEmail;

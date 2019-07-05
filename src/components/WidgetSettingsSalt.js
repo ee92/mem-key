@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from '../api/store';
 import { randomWord } from '../api/generate.js';
 import Input from '../ui/Input.js';
 
@@ -22,13 +22,10 @@ const SaltField = (props) => (
    />
 )
 
-const WidgetSettingsSalt = (props) => {
-   const settings = props.statebase.ref('settings');
-   const useSaltRef = settings.ref('useSalt');
-   const saltRef = settings.ref('salt');
+const WidgetSettingsSalt = () => {
 
-   const [useSalt, setUseSalt] = useStatebase(useSaltRef);
-   const [salt, setSalt] = useStatebase(saltRef);
+   const [useSalt, setUseSalt] = useGlobal('settings.useSalt');
+   const [salt, setSalt] = useGlobal('settings.salt');
 
    const createSalt = () => {
       const word = randomWord()
@@ -59,4 +56,4 @@ const WidgetSettingsSalt = (props) => {
    )
 }
 
-export default withStatebase(WidgetSettingsSalt);
+export default WidgetSettingsSalt;

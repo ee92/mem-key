@@ -1,25 +1,21 @@
 import React, { useEffect } from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from './api/store';
 import { listenAuth } from './api/auth';
 import { listenItems } from './api/database';
 import NavBar from './components/NavBar';
 import Widget from './components/Widget';
 
-const App = (props) => {
-	const sb = props.statebase;
-	const userRef = sb.ref('user');
-	const siteListRef = sb.ref('siteList');
-
-	const [user, setUser] = useStatebase(userRef);
-	const [, setSiteList] = useStatebase(siteListRef);
+const App = () => {
+	const [, setUser] = useGlobal('user');
+	const [, setSiteList] = useGlobal('siteList');
 
 	useEffect(() => {
 		let siteListener
 		const authListener = listenAuth((auth) => {
-			if (!auth) {
-				user && sb.reset()
-				return
-			}
+			// if (!auth) {
+			// 	user && sb.reset()
+			// 	return
+			// }
 			setUser(auth)
 			siteListener = listenItems(auth.uid, setSiteList)
 		})
@@ -38,4 +34,4 @@ const App = (props) => {
 	);
 }
 
-export default withStatebase(App);
+export default App;

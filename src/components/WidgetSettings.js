@@ -1,13 +1,11 @@
 import React from 'react';
-import { withStatebase, useStatebase } from 'react-statebase';
+import useGlobal from '../api/store';
 import WidgetSettingsLength from './WidgetSettingsLength';
 import WidgetSettingsSymbols from './WidgetSettingsSymbols';
 import WidgetSettingsSalt from './WidgetSettingsSalt';
 
-const WidgetSettings = (props) => {
-   const sb = props.statebase;
-   const showSettingsRef = sb.ref('visibility').ref('settings');
-   const [show] = useStatebase(showSettingsRef);
+const WidgetSettings = () => {
+   const [show] = useGlobal('visibility.settings');
    if (!show) return null
    return (
       <div>
@@ -18,4 +16,4 @@ const WidgetSettings = (props) => {
    )
 }
 
-export default withStatebase(WidgetSettings);
+export default WidgetSettings;
