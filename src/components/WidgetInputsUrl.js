@@ -19,6 +19,10 @@ const WidgetInputsUrl = () => {
       return item.site.toLowerCase() === site.toLowerCase()
    });
 
+   const filteredList = siteList.filter((item) => {
+      return item.site.toLowerCase().includes(site.toLowerCase())
+   })
+
    useEffect(() => {
       if (existingSite) {
          setEmail(existingSite.email);
@@ -82,9 +86,7 @@ const WidgetInputsUrl = () => {
             itemId={(item) => item.id}
             onSelect={selectSite}
             attach={<ClearInput/>}
-            list={
-               siteList.filter(item => item.site.includes(site))
-            }
+            list={filteredList}
          />
          <DeleteItem/>
       </div>
