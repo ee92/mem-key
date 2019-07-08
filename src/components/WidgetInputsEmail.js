@@ -1,11 +1,11 @@
 import React from 'react';
 import useGlobal from '../api/store';
-import TextField from '@material-ui/core/TextField';
+import Input from '../ui/Input.js';
 
 const WidgetInputsEmail = () => {
    const [email, setEmail] = useGlobal('inputs.email');
    return (
-      <TextField
+      <Input
          value={email}
          onChange={(e) => setEmail(e.target.value)}
          label="username/email"

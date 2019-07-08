@@ -1,11 +1,11 @@
 import React from 'react';
 import useGlobal from '../api/store';
 import { copy } from '../api/utils.js';
-import { noHover, noMargin } from '../styles/Mui.module.css';
+import { noMargin } from '../styles/Mui.module.css';
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
-import { IconButton } from '@material-ui/core';
+import IconButton from '../ui/IconButton';
 
 const WidgetGeneratedKey = () => {
    const [site] = useGlobal('inputs.site');
@@ -36,7 +36,7 @@ const WidgetGeneratedKey = () => {
          />
          <IconButton
             onClick={clipboard}
-            className={`${noHover} ${noMargin}`}
+            className={noMargin}
          >
             <AssignmentReturned/>
          </IconButton>

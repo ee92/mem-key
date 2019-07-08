@@ -9,13 +9,15 @@ import WidgetControls from './WidgetControls';
 import styles from '../styles/Widget.module.css';
 
 const Widget = () => (
-	<div className={styles.widget}>
-		<WidgetInputsUrl/>
-		<WidgetInputsEmail/>
-		<WidgetInputsSecret/>
-		<WidgetControls/>
-		<WidgetSettings/>
-		<WidgetGeneratedKey/>
+	<div className={styles.root}>
+		<div className={styles.widget}>
+			<WidgetInputsUrl/>
+			<WidgetInputsEmail/>
+			<WidgetInputsSecret/>
+			<WidgetControls/>
+			<WidgetSettings/>
+			<WidgetGeneratedKey/>
+		</div>
 	</div>
 );
 

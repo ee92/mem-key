@@ -1,4 +1,26 @@
-.noHover:hover {
+.underline:before {
+  border-bottom: 1px solid rgb(224, 224, 224) !important;
+  transition: none !important;
+}
+.underline:after {
+  border-bottom: 2px solid rgb(66, 85, 172) !important;
+  transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms !important;
+}
+
+.label {
+  color: rgba(0, 0, 0, 0.3) !important;
+}
+.animated {
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms !important;
+}
+.focused {
+  color: rgb(66, 85, 172) !important;
+}
+
+.iconButton {
+  color: rgb(224, 224, 224) !important;
+}
+.iconButton:hover {
   background-color: inherit !important;
 }
 
@@ -7,7 +29,7 @@
 }
 
 .gray {
-  color: rgba(0, 0, 0, 0.54);
+  color: rgb(224, 224, 224);
 }
 
 .red:hover {

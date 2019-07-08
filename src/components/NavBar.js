@@ -5,7 +5,7 @@ import styles from '../styles/NavBar.module.css';
 const NavBar = () => {
    return (
       <div className={styles.nav}>
-         <h1>{`(*} MemKey`}</h1>
+         <span className={styles.logo}>{`MemKey`}</span>
          <AuthButton />
       </div>
    );

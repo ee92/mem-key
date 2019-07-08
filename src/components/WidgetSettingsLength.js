@@ -1,10 +1,9 @@
 import React from 'react';
 import useGlobal from '../api/store';
-import { noHover } from '../styles/Mui.module.css';
 
 import Input from '../ui/Input';
+import IconButton from '../ui/IconButton';
 import Switch from '@material-ui/core/Switch';
-import IconButton from '@material-ui/core/IconButton';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
@@ -15,10 +14,10 @@ const Increment = props => (
       fullWidth
       attach={
          <React.Fragment>
-            <IconButton className={noHover} onClick={props.incUp}>
+            <IconButton onClick={props.incUp}>
                <ExpandLess/>
             </IconButton>
-            <IconButton className={noHover} onClick={props.incDown}>
+            <IconButton onClick={props.incDown}>
                <ExpandMore/>
             </IconButton>
          </React.Fragment>

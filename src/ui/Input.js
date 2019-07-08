@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import styles from '../styles/Mui.module.css'
 
 const Adornment = ({attach}) => {
    if (!attach) return null
@@ -11,11 +12,22 @@ const Adornment = ({attach}) => {
    )
 }
 
-const Input = ({attach, InputProps, children, ...rest}) => (
+const Input = ({attach, children, InputProps, InputLabelProps, ...rest}) => (
    <TextField
       InputProps={{
-         endAdornment: <Adornment attach={attach}/>,
-         ...InputProps
+         ...InputProps,
+         classes: {
+            underline: styles.underline
+         },
+         endAdornment: attach && <Adornment attach={attach}/>,
+      }}
+      InputLabelProps={{
+         ...InputLabelProps,
+         classes: {
+            root: styles.label,
+            focused: styles.focused,
+            animated: styles.animated
+         }
       }}
       {...rest}
    >

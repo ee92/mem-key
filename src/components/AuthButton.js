@@ -4,14 +4,36 @@ import { login, logout } from '../api/auth.js';
 import styles from '../styles/AuthButton.module.css';
 
 const AuthButton = () => {
+
 	const [user] = useGlobal('user');
+	const Avatar = () => {
+		if (!user) return null;
+		if (user.photoURL) {
+			return (
+				<img
+					src={user.photoURL}
+					className={styles.avatar}
+					alt="user avatar"
+				/>
+			)
+		}
+		return (
+			<span className={styles.avatar}>
+				{user.displayName.charAt(0)}
+			</span>
+		)
+	}
+
 	return (
-		<button
-			onClick={user ? logout : login}
-			className={styles.btn}
-		>
-			{user ? "SIGN OUT" : "SIGN IN"}
-		</button>
+		<div className={styles.root}>
+			<button
+				onClick={user ? logout : login}
+				className={styles.btn}
+			>
+				{user ? "log out" : "log in"}
+			</button>
+			<Avatar/>
+		</div>
 	);
 };
 

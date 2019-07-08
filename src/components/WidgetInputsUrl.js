@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import useGlobal from '../api/store'
 import { removeItem } from '../api/database.js';
-import { noHover, gray, red } from '../styles/Mui.module.css';
+import { gray, red } from '../styles/Mui.module.css';
 import Dropdown from '../ui/Dropdown.js';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '../ui/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import Clear from '@material-ui/icons/Clear';
 
@@ -68,7 +68,6 @@ const WidgetInputsUrl = () => {
                setSite("");
                setEmail("");
             }}
-            className={noHover}
          >
             <Clear/>
          </IconButton>
@@ -87,6 +86,7 @@ const WidgetInputsUrl = () => {
             onSelect={selectSite}
             attach={<ClearInput/>}
             list={filteredList}
+            autoComplete
          />
          <DeleteItem/>
       </div>

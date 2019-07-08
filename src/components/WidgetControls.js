@@ -2,6 +2,9 @@ import React from 'react';
 import useGlobal from '../api/store';
 import { createKey } from '../api/generate.js';
 import { addItem, updateItem } from '../api/database.js';
+import styles from '../styles/Widget.module.css'
+
+import Settings from '@material-ui/icons/Settings';
 
 const WidgetControls = () => {
 
@@ -45,15 +48,15 @@ const WidgetControls = () => {
          <button
             disabled={!site || !email|| !secret}
             onClick={generate}
-            style={{margin: 10, padding: 10, fontSize: 16, width: '100%'}}
+            className={styles.generate}
          >
             Generate
          </button>
          <button
             onClick={toggleSettings}
-            style={{margin: 10, padding: 10, fontSize: 16, width: '100%'}}
+            className={styles.settings}
          >
-            settings
+            <Settings/>
          </button>
       </div>
    );

@@ -3,11 +3,9 @@ import useGlobal from '../api/store';
 import { randomWord } from '../api/generate.js';
 import Input from '../ui/Input.js';
 
+import IconButton from '../ui/IconButton';
 import Switch from '@material-ui/core/Switch';
-import IconButton from '@material-ui/core/IconButton';
 import Sync from '@material-ui/icons/Sync';
-
-import { noHover } from '../styles/Mui.module.css';
 
 const SaltField = (props) => (
    <Input
@@ -15,7 +13,7 @@ const SaltField = (props) => (
       fullWidth
       readOnly
       attach={
-         <IconButton className={noHover} onClick={props.createSalt}>
+         <IconButton onClick={props.createSalt}>
             <Sync/>
          </IconButton>
       }
