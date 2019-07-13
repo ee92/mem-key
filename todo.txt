@@ -1,0 +1,32 @@
+[] fix hash algorithm
+   [x] write tests (input -> output)
+   [] use hex (4byte hex between 0 and 65535)
+      [] normalize 65535 -> wordlist length
+   [] pass tests
+
+[] filter word list
+   [] find dictionary api
+   [] filter from csv
+
+[] trash icon
+   [] remove red class
+      [] remove from css
+   [] use icon button
+   [] open confirmation modal
+
+[] organize css
+   [] remove inline styles
+   [] better class names
+   [] variables for colors / transitions
+
+[] seperate config
+   [] add to .gitignore
+
+[] favicon
+
+[] user reset
+
+[] useGlobal / setGlobal
+   [] useGlobalState => [useGlobal, setGlobal]
+   [] export / import seperately
+

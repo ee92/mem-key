@@ -1,6 +1,6 @@
 import React from 'react';
 import useGlobal from '../api/store';
-import { visualAid } from '../api/generate.js';
+import { visualAid } from '../api/generate';
 import Input from '../ui/Input.js';
 import VisibilityToggle from '../ui/VisibiltyToggle';
 

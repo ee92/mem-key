@@ -1,6 +1,6 @@
 import React from 'react';
 import useGlobal from '../api/store';
-import { createKey } from '../api/generate.js';
+import { createKey } from '../api/generate';
 import { addItem, updateItem } from '../api/database.js';
 import styles from '../styles/Widget.module.css'
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import useGlobal from '../api/store';
-import { randomWord } from '../api/generate.js';
+import { randomWord } from '../api/generate';
 import Input from '../ui/Input.js';
 
 import IconButton from '../ui/IconButton';
