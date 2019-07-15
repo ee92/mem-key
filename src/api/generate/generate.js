@@ -81,12 +81,15 @@ function hashToChars(hash) {
 }
 
 function appendNumber(str, hash) {
-	const number = hash[0]
+	const hex = hash.slice(0, 1)
+	const number = Math.floor(parseInt(hex, 16) / 16 * 10)
    return str + number
 }
 
 function appendSymbol(str, hash, symbols) {
-	const symbol = symbols.split('')[hash[1] % symbols.length]
+	const hex = hash.slice(0, 2)
+	const index = Math.floor(parseInt(hex, 16) / 255 * symbols.length)
+	const symbol = symbols.charAt(index)
 	return str + symbol
 }
 

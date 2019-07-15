@@ -1,17 +1,18 @@
 import {createKey, visualAid} from './generate'
 
 describe('CREATE PASSWORDS', () => {
-	test('create 1 word password', () => {
+	test('create 2 word password', () => {
 		let key = createKey('test.com', 'test@test.com', 'test', {
 			isMemorable: true,
 			length: 10,
-			numWords: 1,
-			includeSymbol: false,
+			numWords: 2,
+			includeSymbol: true,
 			symbols: "@#$%^&*?!",
-			useSalt: false,
-			salt: ""
+			useSalt: true,
+			salt: "voc"
 		})
-		expect(key.split(/(?=[A-Z])/)).toHaveLength(1)
+		expect(key.split(/(?=[A-Z])/)).toHaveLength(2)
+		expect(key).toEqual(expect.not.stringContaining('undefined'))
 	})
 	
 	test('create 6 letter password', () => {
