@@ -6,6 +6,7 @@ import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import Clear from '@material-ui/icons/Clear';
+import { Dialog } from '@material-ui/core';
 
 const WidgetInputsUrl = () => {
    const [user] = useGlobal('user');
@@ -14,6 +15,7 @@ const WidgetInputsUrl = () => {
    const [siteList] = useGlobal('siteList');
    const [, setSettings] = useGlobal('settings');
    const [, setKey] = useGlobal('generatedKey');
+   const [showDelete, setShowDelete] = useGlobal('visibility.confirmDelete');
 
    const existingSite = siteList.find((item) => {
       return item.site.toLowerCase() === site.toLowerCase()
@@ -44,15 +46,18 @@ const WidgetInputsUrl = () => {
       setSite(value);
    }
 
+   const deleteItem = () => {
+      removeItem(user.uid, existingSite.id);
+      setSite("");
+      setEmail("");
+      setShowDelete(false);
+   }
+
    const DeleteItem = () => {
       if (!existingSite || !user) return null;
       return (
          <span
-            onClick={() => {
-               removeItem(user.uid, existingSite.id)
-               setSite("")
-               setEmail("")
-            }}
+            onClick={() => setShowDelete(true)}
             className={`${gray} ${red}`}
          >
             <Delete/>
@@ -89,6 +94,15 @@ const WidgetInputsUrl = () => {
             autoComplete
          />
          <DeleteItem/>
+         <Dialog
+            open={showDelete}
+            onClose={() => setShowDelete(false)}
+            maxWidth="xl"
+         >
+            <h1>are you sure?</h1>
+            <button onClick={deleteItem}>delete</button>
+            <button onClick={() => setShowDelete(false)}>cancel</button>
+         </Dialog>
       </div>
    );
 }

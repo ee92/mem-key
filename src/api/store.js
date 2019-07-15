@@ -22,7 +22,8 @@ const initialState = {
 	visibility: {
 		settings: false,
 		secret: false,
-		generatedKey: false
+		generatedKey: false,
+		confirmDelete: false
 	}
 }
 

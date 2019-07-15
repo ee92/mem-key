@@ -6,13 +6,10 @@ import WidgetSettingsSalt from './WidgetSettingsSalt';
 
 import Dialog from '@material-ui/core/Dialog'
 
-const WidgetSettings = () => {
+const WidgetSettings = (props) => {
    const [show, setShow] = useGlobal('visibility.settings');
-   const close = () => { 
-      setShow(false);
-   }
    return (
-      <Dialog open={show} onClose={close} maxWidth="xl">
+      <Dialog open={show} onClose={() => setShow(false)} maxWidth="xl">
          <div style={{padding: 20}}>
             <h2>Password Settings</h2>
             <WidgetSettingsLength/>
