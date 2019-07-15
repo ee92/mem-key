@@ -1,7 +1,7 @@
 import React from 'react';
 import useGlobal from '../api/store';
 import { randomWord } from '../api/generate';
-import Input from '../ui/Input.js';
+import Input from '../ui/Input';
 
 import IconButton from '../ui/IconButton';
 import Switch from '@material-ui/core/Switch';

@@ -1,6 +1,6 @@
 import React from 'react';
 import useGlobal from '../api/store';
-import Input from '../ui/Input.js';
+import Input from '../ui/Input';
 
 const WidgetInputsEmail = () => {
    const [email, setEmail] = useGlobal('inputs.email');

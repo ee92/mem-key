@@ -1,7 +1,7 @@
 import React from 'react';
 import useGlobal from '../api/store';
 import { createKey } from '../api/generate';
-import { addItem, updateItem } from '../api/database.js';
+import { addItem, updateItem } from '../api/database';
 import styles from '../styles/Widget.module.css'
 
 import Settings from '@material-ui/icons/Settings';

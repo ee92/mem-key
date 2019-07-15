@@ -1,6 +1,6 @@
 import React from 'react';
 import useGlobal from '../api/store';
-import { login, logout } from '../api/auth.js';
+import { login, logout } from '../api/auth';
 import styles from '../styles/AuthButton.module.css';
 
 const AuthButton = () => {
