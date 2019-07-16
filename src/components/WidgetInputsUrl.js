@@ -56,12 +56,6 @@ const WidgetInputsUrl = () => {
    const DeleteItem = () => {
       if (!existingSite || !user) return null;
       return (
-         // <span
-         //    onClick={() => setShowDelete(true)}
-         //    className={`${gray} ${red}`}
-         // >
-         //    <Delete/>
-         // </span>
          <IconButton
             onClick={() => setShowDelete(true)}
             className={noMargin}
