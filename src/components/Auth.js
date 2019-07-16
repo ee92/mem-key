@@ -4,7 +4,7 @@ import { login, logout } from '../api/auth';
 import Avatar from '../ui/Avatar';
 import styles from '../styles/AuthButton.module.css';
 
-const AuthButton = () => {
+const Auth = () => {
 	const [user] = useGlobal('user');
 	return (
 		<div className={styles.root}>
@@ -24,4 +24,4 @@ const AuthButton = () => {
 	);
 };
 
-export default AuthButton;
+export default Auth;

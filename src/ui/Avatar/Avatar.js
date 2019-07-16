@@ -14,7 +14,7 @@ export const Avatar = ({photo, username}) => {
       <img
          src={photo}
          className={styles.avatar}
-         alt={`photo of user ${username}`}
+         alt={username}
       />
    );
 }
