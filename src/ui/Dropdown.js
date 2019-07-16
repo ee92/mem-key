@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { hover } from '../styles/Mui.module.css';
 
 import Input from './Input';
@@ -13,34 +13,56 @@ const styles = {
       zIndex: 1,
       position: 'absolute',
       backgroundColor: 'white',
-      boxShadow: 'rgba(0,0,0,0.15) 0px 1px 2px'
-  },
-  item: {
-     padding: 10,
-  }
+      boxShadow: 'rgba(0,0,0,0.15) 0px 1px 2px',
+      maxHeight: 150,
+      overflow: 'auto'
+   },
+   item: {
+      padding: 10,
+   },
+   gray: {
+      backgroundColor: 'rgba(0,0,0,0.08)'
+   }
 }
 
-const Selector = (props) => {
-   if (!props.open) return null
+function usePrevious(value) {
+   const ref = useRef();
+   useEffect(() => {
+     ref.current = value;
+   });
+   return ref.current;
+}
+
+const Selector = ({list, itemText, itemId, onSelect, selected, setHover}) => {
+   const refs = []
+   const lastSelected = usePrevious(selected);
+   useEffect(() => {
+      const option = refs[selected]
+      option && option.scrollIntoView && option.scrollIntoView({behavior: "smooth"})
+   }, [refs, selected, lastSelected])
    return (
       <div
          style={styles.dropdown}
-         onMouseEnter={() => props.setHover(true)}
-         onMouseLeave={() => props.setHover(false)}
+         onMouseEnter={() => setHover(true)}
+         onMouseLeave={() => setHover(false)}
       >
-         {props.list.map((item) => 
-            <div
-               key={props.itemId(item)}
-               style={styles.item}
-               className={hover}
-               onClick={() => {
-                  props.onSelect(item)
-                  props.setOpen(false)
-               }}
-            >
-               {props.itemText(item)}
-            </div>
-         )}
+         {list.map((item, i) => {
+            const key = itemId(item)
+            const itemStyle = (i === selected)
+               ? {...styles.item, ...styles.gray}
+               : styles.item
+            return (
+               <div
+                  ref={node => refs[i] = node}
+                  key={key}
+                  style={itemStyle}
+                  className={hover}
+                  onClick={() => onSelect(item)}
+               >
+                  {itemText(item)}
+               </div>
+            )
+         })}
       </div>
    )
 }
@@ -53,16 +75,32 @@ const Dropdown = (props) => {
       onSelect,
       InputProps, ...rest} = props
 
-
    const [open, setOpen] = useState(false)
    const [hover, setHover] = useState(false)
-   const handleEnter = (e) => {
+   const [selected, setSelected] = useState(-1)
+
+   useEffect(() => {
+      setSelected(-1)
+   }, [open, setSelected])
+
+   const select = (item) => {
+      onSelect(item);
+      setOpen(false);
+   }
+   const handleKeys = (e) => {
       switch(e.key) {
          case "Enter":
+            selected >= 0 && select(list[selected])
             setOpen(false);
             break;
          case "Escape":
             setOpen(false);
+            break;
+         case "ArrowUp":
+            selected > 0 && setSelected(selected - 1)
+            break;
+         case "ArrowDown":
+            selected < list.length - 1 && setSelected(selected + 1)
             break;
          default:
             setOpen(true);
@@ -73,22 +111,21 @@ const Dropdown = (props) => {
       <div style={styles.root}>
          <Input
             InputProps={{
-               onKeyDown: handleEnter,
+               onKeyDown: handleKeys,
                onFocus: () => setOpen(true),
                onBlur: () => !hover && setOpen(false),
                ...InputProps
             }}
             {...rest}
          />
-         <Selector
+         {open && <Selector
             list={list}
             itemText={itemText}
             itemId={itemId}
-            onSelect={onSelect}
-            open={open}
-            setOpen={setOpen}
+            onSelect={select}
             setHover={setHover}
-         />
+            selected={selected}
+         />}
       </div>
    )
 }

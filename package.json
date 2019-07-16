@@ -10,6 +10,7 @@
     "md5": "^2.2.1",
     "pbkdf2": "^3.0.17",
     "react": "^16.8.6",
+    "react-autosuggest": "^9.4.3",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
     "react-use-global": "^1.0.2"

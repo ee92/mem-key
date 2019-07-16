@@ -8,6 +8,7 @@ import Delete from '@material-ui/icons/Delete';
 import Clear from '@material-ui/icons/Clear';
 import { Dialog } from '@material-ui/core';
 
+
 const WidgetInputsUrl = () => {
    const [user] = useGlobal('user');
    const [site, setSite] = useGlobal('inputs.site');
@@ -91,7 +92,6 @@ const WidgetInputsUrl = () => {
             onSelect={selectSite}
             attach={<ClearInput/>}
             list={filteredList}
-            autoComplete
          />
          <DeleteItem/>
          <Dialog
