@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import useGlobal from '../api/store'
 import { removeItem } from '../api/database';
-import { gray, red } from '../styles/Mui.module.css';
+import { noMargin } from '../styles/Mui.module.css';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
 import Delete from '@material-ui/icons/Delete';
@@ -56,12 +56,18 @@ const WidgetInputsUrl = () => {
    const DeleteItem = () => {
       if (!existingSite || !user) return null;
       return (
-         <span
+         // <span
+         //    onClick={() => setShowDelete(true)}
+         //    className={`${gray} ${red}`}
+         // >
+         //    <Delete/>
+         // </span>
+         <IconButton
             onClick={() => setShowDelete(true)}
-            className={`${gray} ${red}`}
+            className={noMargin}
          >
             <Delete/>
-         </span>
+         </IconButton>
       );
    }
 
@@ -84,7 +90,7 @@ const WidgetInputsUrl = () => {
          <Dropdown
             value={site}
             onChange={handleInput}
-            label="app name/url"
+            label="Website"
             fullWidth
             itemText={(item) => item.site}
             itemId={(item) => item.id}
