@@ -1,29 +1,11 @@
 import React from 'react';
 import useGlobal from '../api/store';
 import { login, logout } from '../api/auth';
+import Avatar from '../ui/Avatar';
 import styles from '../styles/AuthButton.module.css';
 
 const AuthButton = () => {
-
 	const [user] = useGlobal('user');
-	const Avatar = () => {
-		if (!user) return null;
-		if (user.photoURL) {
-			return (
-				<img
-					src={user.photoURL}
-					className={styles.avatar}
-					alt="user avatar"
-				/>
-			)
-		}
-		return (
-			<span className={styles.avatar}>
-				{user.displayName.charAt(0)}
-			</span>
-		)
-	}
-
 	return (
 		<div className={styles.root}>
 			<button
@@ -32,7 +14,12 @@ const AuthButton = () => {
 			>
 				{user ? "log out" : "log in"}
 			</button>
-			<Avatar/>
+			{user && 
+				<Avatar 
+					photo={user.photoURL} 
+					username={user.displayName}
+				/>
+			}
 		</div>
 	);
 };
