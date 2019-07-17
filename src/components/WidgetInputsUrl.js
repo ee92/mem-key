@@ -86,12 +86,11 @@ const WidgetInputsUrl = () => {
             value={site}
             onChange={handleInput}
             label="Website"
-            fullWidth
-            itemText={(item) => item.site}
-            itemId={(item) => item.id}
+            renderItem={(item) => item.site}
             onSelect={selectSite}
             attach={<ClearInput/>}
             list={filteredList}
+            fullWidth
          />
          <DeleteItem/>
          <Dialog
