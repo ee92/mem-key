@@ -1,11 +1,11 @@
 import React from 'react';
-import useGlobal from '../api/store';
-import { copy } from '../api/utils';
-import { noMargin } from '../styles/Mui.module.css';
-import Input from '../ui/Input';
-import VisibilityToggle from '../ui/VisibiltyToggle';
+import useGlobal from '../../api/store';
+import { copy } from '../../api/utils';
+import { noMargin } from '../../styles/Mui.module.css';
+import Input from '../../ui/Input';
+import VisibilityToggle from '../../ui/VisibiltyToggle';
 import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
-import IconButton from '../ui/IconButton';
+import IconButton from '../../ui/IconButton';
 
 const WidgetGeneratedKey = () => {
    const [site] = useGlobal('inputs.site');

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import useGlobal from '../api/store'
-import { removeItem } from '../api/database';
-import { noMargin } from '../styles/Mui.module.css';
-import Dropdown from '../ui/Dropdown';
-import IconButton from '../ui/IconButton';
+import useGlobal from '../../api/store'
+import { removeItem } from '../../api/database';
+import { noMargin } from '../../styles/Mui.module.css';
+import Dropdown from '../../ui/Dropdown';
+import IconButton from '../../ui/IconButton';
 import Delete from '@material-ui/icons/Delete';
 import Clear from '@material-ui/icons/Clear';
 import { Dialog } from '@material-ui/core';

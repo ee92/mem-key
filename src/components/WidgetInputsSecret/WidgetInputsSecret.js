@@ -1,8 +1,8 @@
 import React from 'react';
-import useGlobal from '../api/store';
-import { visualAid } from '../api/generate';
-import Input from '../ui/Input';
-import VisibilityToggle from '../ui/VisibiltyToggle';
+import useGlobal from '../../api/store';
+import { visualAid } from '../../api/generate';
+import Input from '../../ui/Input';
+import VisibilityToggle from '../../ui/VisibiltyToggle';
 
 const WidgetInputsSecret = () => {
 

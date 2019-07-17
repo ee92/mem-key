@@ -1,8 +1,8 @@
 import React from 'react';
-import useGlobal from '../api/store';
+import useGlobal from '../../api/store';
 
-import Input from '../ui/Input';
-import IconButton from '../ui/IconButton';
+import Input from '../../ui/Input';
+import IconButton from '../../ui/IconButton';
 import Switch from '@material-ui/core/Switch';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';

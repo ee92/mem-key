@@ -1,6 +1,6 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import styles from '../styles/Mui.module.css';
+import styles from '../../styles/Mui.module.css';
  
 const _IconButton = ({children, ...rest}) => (
    <IconButton

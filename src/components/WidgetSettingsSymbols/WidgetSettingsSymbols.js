@@ -1,6 +1,6 @@
 import React from 'react';
-import useGlobal from '../api/store';
-import Input from '../ui/Input';
+import useGlobal from '../../api/store';
+import Input from '../../ui/Input';
 
 import Switch from '@material-ui/core/Switch';
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import useGlobal from '../api/store';
-import WidgetSettingsLength from './WidgetSettingsLength';
-import WidgetSettingsSymbols from './WidgetSettingsSymbols';
-import WidgetSettingsSalt from './WidgetSettingsSalt';
+import useGlobal from '../../api/store';
+import WidgetSettingsLength from '../WidgetSettingsLength';
+import WidgetSettingsSymbols from '../WidgetSettingsSymbols';
+import WidgetSettingsSalt from '../WidgetSettingsSalt';
 
 import Dialog from '@material-ui/core/Dialog'
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import useGlobal from '../api/store';
-import { login, logout } from '../api/auth';
-import Avatar from '../ui/Avatar';
-import styles from '../styles/AuthButton.module.css';
+import useGlobal from '../../api/store';
+import { login, logout } from '../../api/auth';
+import Avatar from '../../ui/Avatar';
+import styles from '../../styles/AuthButton.module.css';
 
 const Auth = () => {
 	const [user] = useGlobal('user');

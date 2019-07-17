@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import styles from '../styles/Mui.module.css'
+import styles from '../../styles/Mui.module.css'
 
 const Adornment = ({attach}) => {
    if (!attach) return null
