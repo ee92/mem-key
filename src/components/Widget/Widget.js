@@ -6,7 +6,7 @@ import WidgetSettings from '../WidgetSettings';
 import WidgetGeneratedKey from '../WidgetGeneratedKey';
 import WidgetControls from '../WidgetControls';
 
-import styles from '../../styles/Widget.module.css';
+import styles from './Widget.module.css';
 
 const Widget = () => (
 	<div className={styles.root}>

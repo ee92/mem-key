@@ -3,14 +3,15 @@ import useGlobal from '../../api/store';
 import WidgetSettingsLength from '../WidgetSettingsLength';
 import WidgetSettingsSymbols from '../WidgetSettingsSymbols';
 import WidgetSettingsSalt from '../WidgetSettingsSalt';
+import styles from './WidgetSettings.module.css';
 
 import Dialog from '@material-ui/core/Dialog'
 
-const WidgetSettings = (props) => {
+const WidgetSettings = () => {
    const [show, setShow] = useGlobal('visibility.settings');
    return (
       <Dialog open={show} onClose={() => setShow(false)} maxWidth="xl">
-         <div style={{padding: 20}}>
+         <div className={styles.root}>
             <h2>Password Settings</h2>
             <WidgetSettingsLength/>
             <WidgetSettingsSymbols/>

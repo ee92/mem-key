@@ -2,7 +2,7 @@ import React from 'react';
 import useGlobal from '../../api/store';
 import { login, logout } from '../../api/auth';
 import Avatar from '../../ui/Avatar';
-import styles from '../../styles/AuthButton.module.css';
+import styles from './Auth.module.css';
 
 const Auth = () => {
 	const [user] = useGlobal('user');

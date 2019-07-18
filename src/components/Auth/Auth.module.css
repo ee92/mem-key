@@ -1,0 +1,20 @@
+.root {
+   display: flex;
+   align-content: center;
+}
+
+.btn {
+   font-size: 14px;
+   font-weight: 300;
+   padding: 10px;
+   border: none;
+   border-radius: 2px;
+   color: white;
+   text-transform: uppercase;
+   background-color: transparent;
+   transition: 0.2s;
+}
+
+.btn:hover {
+   background-color: rgb(216, 216, 216, 0.1);
+}

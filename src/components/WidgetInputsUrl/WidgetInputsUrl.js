@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import useGlobal from '../../api/store'
 import { removeItem } from '../../api/database';
-import { noMargin } from '../../styles/Mui.module.css';
+import styles from './WidgetInputsUrl.module.css';
 import Dropdown from '../../ui/Dropdown';
 import IconButton from '../../ui/IconButton';
 import Delete from '@material-ui/icons/Delete';
@@ -59,7 +59,7 @@ const WidgetInputsUrl = () => {
       return (
          <IconButton
             onClick={() => setShowDelete(true)}
-            className={noMargin}
+            className={styles.noMargin}
          >
             <Delete/>
          </IconButton>
@@ -81,7 +81,7 @@ const WidgetInputsUrl = () => {
    }
 
    return (
-      <div style={{display: 'flex', alignItems: 'flex-end'}}>
+      <div className={styles.root}>
          <Dropdown
             value={site}
             onChange={handleInput}

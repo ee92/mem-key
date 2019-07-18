@@ -1,7 +1,7 @@
 import React from 'react';
 import useGlobal from '../../api/store';
 import { copy } from '../../api/utils';
-import { noMargin } from '../../styles/Mui.module.css';
+import styles from './WidgetGeneratedKey.module.css';
 import Input from '../../ui/Input';
 import VisibilityToggle from '../../ui/VisibiltyToggle';
 import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
@@ -20,7 +20,7 @@ const WidgetGeneratedKey = () => {
    const clipboard = () => copy(key);
 
    return (
-      <div style={{display: 'flex', alignItems: 'flex-end'}}>
+      <div className={styles.root}>
          <Input
             value={key}
             type={showKey ? "text" : "password"}
@@ -36,7 +36,7 @@ const WidgetGeneratedKey = () => {
          />
          <IconButton
             onClick={clipboard}
-            className={noMargin}
+            className={styles.noMargin}
          >
             <AssignmentReturned/>
          </IconButton>

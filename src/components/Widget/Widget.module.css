@@ -1,0 +1,13 @@
+.root {
+   display: flex;
+   justify-content: center;
+}
+
+.widget {
+   background-color: white;
+   box-shadow: rgba(0,0,0,0.18) 0px 0.5px 4px;
+   max-width: 600px;
+   margin: 20px;
+   padding: 20px;
+   width: 100%;
+}

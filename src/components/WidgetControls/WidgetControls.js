@@ -2,7 +2,7 @@ import React from 'react';
 import useGlobal from '../../api/store';
 import { createKey } from '../../api/generate';
 import { addItem, updateItem } from '../../api/database';
-import styles from '../../styles/Widget.module.css'
+import styles from './WidgetControls.module.css'
 
 import Settings from '@material-ui/icons/Settings';
 
@@ -44,7 +44,7 @@ const WidgetControls = () => {
    }
 
    return (
-      <div style={{display: 'flex'}}>
+      <div className={styles.root}>
          <button
             disabled={!site || !email|| !secret}
             onClick={generate}

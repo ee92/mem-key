@@ -1,0 +1,6 @@
+.root {
+   color: rgb(224, 224, 224) !important;
+}
+.root:hover {
+   background-color: inherit !important;
+}

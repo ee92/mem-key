@@ -3,6 +3,7 @@ import useGlobal from '../../api/store';
 import { visualAid } from '../../api/generate';
 import Input from '../../ui/Input';
 import VisibilityToggle from '../../ui/VisibiltyToggle';
+import styles from './WidgetInputsSecret.module.css'
 
 const WidgetInputsSecret = () => {
 
@@ -18,7 +19,7 @@ const WidgetInputsSecret = () => {
    }
    
    return (
-      <div style={{display: 'flex', alignItems: 'baseline'}}>
+      <div className={styles.root}>
          <Input
             value={secret}
             type={showSecret ? "text" : "password"}
@@ -35,13 +36,8 @@ const WidgetInputsSecret = () => {
          {hint.map(icon =>
             <i
                key={icon[0]}
-               className={`fas fa-${icon[0]}`}
-               style={{
-                  color: icon[1],
-                  minWidth: 28,
-                  textAlign: 'center',
-                  fontSize: 20
-               }}
+               className={`fas fa-${icon[0]} ${styles.icon}`}
+               style={{color: icon[1]}}
             />
          )}
       </div>
