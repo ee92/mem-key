@@ -6,8 +6,18 @@
 .widget {
    background-color: white;
    box-shadow: rgba(0,0,0,0.18) 0px 0.5px 4px;
-   max-width: 600px;
+   max-width: 500px;
    margin: 20px;
-   padding: 20px;
+   padding: 20px 60px;
    width: 100%;
+}
+
+.widget > * {
+   padding: 10px 0px;
+}
+
+@media (max-width: 500px) {
+   .widget {
+      padding: 20px;
+   }
 }

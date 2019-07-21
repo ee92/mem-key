@@ -1,3 +1,7 @@
 .root {
-   padding: 10px;
+   padding: 20px;
+}
+
+.paper {
+   margin: 20px !important;
 }

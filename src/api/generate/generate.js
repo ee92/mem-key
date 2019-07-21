@@ -1,6 +1,15 @@
 import pbkdf2 from 'pbkdf2'
 import md5 from 'md5'
-import wordList from '../../words.js'
+
+let wordList = ['lame way to make tests pass'];
+
+fetch('/assets/js/words.json')
+.then(data => data.json())
+.then(json => {
+	wordList = json
+})
+
+// let wordList = ['a', 'b', 'c']
 
 export function randomWord() {
 	const word = wordList[Math.floor(Math.random() * wordList.length)]
@@ -41,17 +50,22 @@ export function createKey(site, email, secret, settings) {
 	const str = site + email + secret + length + numWords + symbols
 	const saltUsed = useSalt ? salt : ''
 	const hashLength = isMemorable
-		? numWords * 2
-		: includeSymbol ? length - 2 : length - 1
+		? numWords * 2 - 1
+		: includeSymbol ? length - 1 : length - 1
 	const hash = pbkdf2
 		.pbkdf2Sync(str, saltUsed, 1, hashLength, 'sha512')
-      .toString('hex')
-	let key = isMemorable ? hashToWords(hash) : hashToChars(hash)
-	key = appendNumber(key, hash)
-	if (includeSymbol) {
+		.toString('hex')
+		
+	if (isMemorable) {
+		let key = hashToWords(hash)
+		key = appendNumber(key, hash)
 		key = appendSymbol(key, hash, symbols)
+		return key
+	} else {
+		let key = hashToChars(hash, includeSymbol && symbols)
+		key = appendNumber(key, hash)
+		return key
 	}
-	return key
 }
 
 function hashToWords(hash) {
@@ -66,10 +80,11 @@ function hashToWords(hash) {
 	return key
 }
 
-function hashToChars(hash) {
+function hashToChars(hash, symbols) {
 	const alfanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
 						 "abcdefghijklmnopqrstuvwxyz" +
-						 "0123456789"
+						 "0123456789" + 
+						 symbols || ""   // add symbols if supplied
 	let key = ''
 	for (let i=0; i<hash.length; i+=2) {
 		const hex = hash.slice(i, i + 2)

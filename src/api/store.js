@@ -10,7 +10,17 @@ const initialState = {
 	},
 	visualHint: [],
 	generatedKey: "",
+	generatedKeyPreview: "",
 	settings: {
+		isMemorable: true,
+		length: 10,
+		numWords: 3,
+		includeSymbol: true,
+		symbols: "@#$%^&*?!",
+		useSalt: false,
+		salt: ""
+	},
+	prevSettings: {
 		isMemorable: true,
 		length: 10,
 		numWords: 3,

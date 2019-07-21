@@ -2,14 +2,14 @@ import React from 'react';
 import useGlobal from '../../api/store';
 import { randomWord } from '../../api/generate';
 import Input from '../../ui/Input';
-
+import Switch from '../../ui/Switch';
 import IconButton from '../../ui/IconButton';
-import Switch from '@material-ui/core/Switch';
 import Sync from '@material-ui/icons/Sync';
+import styles from './WidgetSettingsSalt.module.css';
 
 const SaltField = (props) => (
    <Input
-      value={props.salt} 
+      value={props.salt}
       fullWidth
       readOnly
       attach={
@@ -39,11 +39,10 @@ const WidgetSettingsSalt = () => {
    }
 
    return (
-      <div>
+      <div className={styles.root}>
          <Switch
             checked={useSalt}
             onChange={toggleSalt}
-            color="primary"
          />
          <label>Use salt</label>
          {useSalt && <SaltField

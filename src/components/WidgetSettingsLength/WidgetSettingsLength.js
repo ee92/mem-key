@@ -1,11 +1,11 @@
 import React from 'react';
 import useGlobal from '../../api/store';
-
 import Input from '../../ui/Input';
 import IconButton from '../../ui/IconButton';
-import Switch from '@material-ui/core/Switch';
+import Switch from '../../ui/Switch';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import styles from './WidgetSettingsLength.module.css';
 
 const Increment = props => (
    <Input
@@ -14,11 +14,11 @@ const Increment = props => (
       fullWidth
       attach={
          <React.Fragment>
+         <IconButton onClick={props.incDown}>
+               <ExpandMore/>
+            </IconButton>
             <IconButton onClick={props.incUp}>
                <ExpandLess/>
-            </IconButton>
-            <IconButton onClick={props.incDown}>
-               <ExpandMore/>
             </IconButton>
          </React.Fragment>
       }
@@ -41,11 +41,10 @@ const WidgetSettingsLength = () => {
    const handleToggle = (e) => setMemorable(e.target.checked);
 
    return (
-      <div>
+      <div className={styles.root}>
          <Switch
             checked={memorable}
             onChange={handleToggle}
-            color="primary"
          />
          <label>Memorizable</label>
          <Increment

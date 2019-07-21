@@ -1,5 +1,6 @@
 import {createKey, visualAid} from './generate'
 
+
 describe('CREATE PASSWORDS', () => {
 	test('create 2 word password', () => {
 		let key = createKey('test.com', 'test@test.com', 'test', {

@@ -1,15 +1,14 @@
 import React from 'react';
 import useGlobal from '../../api/store';
 import Input from '../../ui/Input';
+import Switch from '../../ui/Switch';
+import styles from './WidgetSettingsSymbols.module.css';
 
-import Switch from '@material-ui/core/Switch';
-
-const WidgetSettingsSymbol = () => {
-
-   const [usesSymbol, setUsesSymbol] = useGlobal('settings.includeSymbol');
+const WidgetSettingsSymbols = () => {
+   const [usesSymbols, setUsesSymbols] = useGlobal('settings.includeSymbol');
    const [symbols, setSymbols] = useGlobal('settings.symbols');
 
-   const handleToggle = (e) => setUsesSymbol(e.target.checked);
+   const handleToggle = (e) => setUsesSymbols(e.target.checked);
    const handleInput = (e) => {
       const re = /^[!@#$%^&*?]+$/;
       const value = e.target.value;
@@ -17,19 +16,19 @@ const WidgetSettingsSymbol = () => {
    }
 
    return (
-      <div>
+      <div className={styles.root}>
          <Switch
-            checked={usesSymbol}
+            checked={usesSymbols}
             onChange={handleToggle}
-            color="primary"
          />
          <label>Symbols</label>
-         {usesSymbol && <Input
+         <Input
             value={symbols}
             onChange={handleInput}
+            disabled={!usesSymbols}
             fullWidth
-         />}
+         />
       </div>
    )
 }
-export default WidgetSettingsSymbol;
+export default WidgetSettingsSymbols;
