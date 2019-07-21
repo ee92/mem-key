@@ -9,8 +9,6 @@ fetch('/assets/js/words.json')
 	wordList = json
 })
 
-// let wordList = ['a', 'b', 'c']
-
 export function randomWord() {
 	const word = wordList[Math.floor(Math.random() * wordList.length)]
 	return word
@@ -55,17 +53,17 @@ export function createKey(site, email, secret, settings) {
 	const hash = pbkdf2
 		.pbkdf2Sync(str, saltUsed, 1, hashLength, 'sha512')
 		.toString('hex')
-		
+	
+	let key
 	if (isMemorable) {
-		let key = hashToWords(hash)
+		key = hashToWords(hash)
 		key = appendNumber(key, hash)
 		key = appendSymbol(key, hash, symbols)
-		return key
 	} else {
-		let key = hashToChars(hash, includeSymbol && symbols)
+		key = hashToChars(hash, includeSymbol && symbols)
 		key = appendNumber(key, hash)
-		return key
 	}
+	return key
 }
 
 function hashToWords(hash) {
@@ -107,9 +105,3 @@ function appendSymbol(str, hash, symbols) {
 	const symbol = symbols.charAt(index)
 	return str + symbol
 }
-
-
-
-
-
-
