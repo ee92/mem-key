@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useGlobal from '../../api/store';
 import WidgetSettingsLength from '../WidgetSettingsLength';
 import WidgetSettingsSymbols from '../WidgetSettingsSymbols';
@@ -10,11 +10,26 @@ import styles from './WidgetSettings.module.css';
 import Dialog from '@material-ui/core/Dialog'
 
 const WidgetSettings = () => {
+   const [settings, setSettings] = useGlobal('settings');
+   const [prevSettings, setPrevSettings] = useGlobal('prevSettings');
    const [show, setShow] = useGlobal('visibility.settings');
+
+   
+   useEffect(() => {
+      if (show) setPrevSettings(settings);
+      // eslint-disable-next-line
+   }, [show]);
+
+   const cancel = () => {
+      console.log('reset to: ', prevSettings);
+      setSettings(prevSettings);
+      setShow(false);
+   }
+
    return (
       <Dialog
          open={show}
-         onClose={() => setShow(false)}
+         onClose={() => {setShow(false)}}
          maxWidth="xl"
          classes={{
             paper: styles.paper
@@ -26,7 +41,10 @@ const WidgetSettings = () => {
             <WidgetSettingsSymbols/>
             <WidgetSettingsSalt/>
             <PasswordPreview/>
-            <WidgetSettingsControls close={() => setShow(false)}/>
+            <WidgetSettingsControls 
+               save={() => setShow(false)}
+               cancel={cancel}
+            />
          </div>
       </Dialog>
    )

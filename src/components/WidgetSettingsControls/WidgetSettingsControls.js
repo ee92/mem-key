@@ -1,13 +1,7 @@
 import React from 'react';
 import styles from './WidgetSettingsControls.module.css';
 
-export const WidgetSettingsControls = ({close}) => {
-   const cancel = () => {
-      close()
-   }
-   const save = () => {
-      close()
-   }
+export const WidgetSettingsControls = ({save, cancel}) => {
    return (
       <div className={styles.root}>
          <button
