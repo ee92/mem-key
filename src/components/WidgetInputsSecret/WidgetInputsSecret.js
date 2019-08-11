@@ -24,7 +24,7 @@ const WidgetInputsSecret = () => {
             value={secret}
             type={showSecret ? "text" : "password"}
             onChange={handleInput}
-            label="memkey"
+            label="MemKey"
             fullWidth
             attach={
                <VisibilityToggle
