@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useGlobal from '../../api/store';
 import WidgetSettingsLength from '../WidgetSettingsLength';
 import WidgetSettingsSymbols from '../WidgetSettingsSymbols';
@@ -21,7 +21,6 @@ const WidgetSettings = () => {
    }, [show]);
 
    const cancel = () => {
-      console.log('reset to: ', prevSettings);
       setSettings(prevSettings);
       setShow(false);
    }
