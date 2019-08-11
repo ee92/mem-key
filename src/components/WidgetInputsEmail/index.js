@@ -1,3 +1,1 @@
-import WidgetInputsEmail from './WidgetInputsEmail';
-
-export default WidgetInputsEmail;
+export {default} from './WidgetInputsEmail';

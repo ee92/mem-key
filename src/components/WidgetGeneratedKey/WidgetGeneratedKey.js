@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useGlobal from '../../api/store';
 import { copy } from '../../api/utils';
 import styles from './WidgetGeneratedKey.module.css';
@@ -7,7 +7,10 @@ import VisibilityToggle from '../../ui/VisibiltyToggle';
 import AssignmentReturned from '@material-ui/icons/AssignmentReturned';
 import IconButton from '../../ui/IconButton';
 
+import Snackbar from '@material-ui/core/Snackbar';
+
 const WidgetGeneratedKey = () => {
+   const [copied, setCopied] = useState(false);
    const [site] = useGlobal('inputs.site');
    const [email] = useGlobal('inputs.email');
    const [secret] = useGlobal('inputs.secret');
@@ -17,7 +20,11 @@ const WidgetGeneratedKey = () => {
    if (!key || !site || !email || !secret) return null;
 
    const toggleShow = () => setShowKey(!showKey);
-   const clipboard = () => copy(key);
+   
+   const clipboard = () => {
+      copy(key);
+      setCopied(true);
+   }
 
    return (
       <div className={styles.root}>
@@ -40,6 +47,13 @@ const WidgetGeneratedKey = () => {
          >
             <AssignmentReturned/>
          </IconButton>
+         <Snackbar
+            open={copied}
+            onClose={() => setCopied(false)}
+            message="Copied to clipboard"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            autoHideDuration={1500}
+         />
       </div>
    );
 };

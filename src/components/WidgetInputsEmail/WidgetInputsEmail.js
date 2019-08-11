@@ -8,7 +8,7 @@ const WidgetInputsEmail = () => {
       <Input
          value={email}
          onChange={(e) => setEmail(e.target.value)}
-         label="username/email"
+         label="Username/Email"
          fullWidth
       />
    );

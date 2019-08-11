@@ -12,7 +12,7 @@ const App = () => {
 	useEffect(() => {
 		let siteListener
 		const authListener = listenAuth((auth) => {
-			// TODO: reset entire state if user logs out
+			// TODO: reset entire state if user logs in or out !!!
 			if (!auth) return
 			setUser(auth)
 			siteListener = listenItems(auth.uid, setSiteList)
