@@ -60,6 +60,7 @@ const WidgetInputsUrl = () => {
          <IconButton
             onClick={() => setShowDelete(true)}
             className={styles.noMargin}
+            tabindex="-1"
          >
             <Delete/>
          </IconButton>
@@ -74,6 +75,7 @@ const WidgetInputsUrl = () => {
                setSite("");
                setEmail("");
             }}
+            tabindex="-1"
          >
             <Clear/>
          </IconButton>

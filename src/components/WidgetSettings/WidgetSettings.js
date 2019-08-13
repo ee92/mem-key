@@ -28,7 +28,7 @@ const WidgetSettings = () => {
    return (
       <Dialog
          open={show}
-         onClose={() => {setShow(false)}}
+         onClose={cancel}
          maxWidth="xl"
          classes={{
             paper: styles.paper
