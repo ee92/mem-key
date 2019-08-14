@@ -5,7 +5,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
  
 const VisibilityToggle = (props) => (
-   <IconButton onClick={props.toggle} tabindex="-1">
+   <IconButton onClick={props.toggle} tabIndex="-1">
       <ToggleIcon
          on={props.on}
          onIcon={<Visibility />}

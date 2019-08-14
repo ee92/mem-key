@@ -75,7 +75,7 @@ const WidgetInputsUrl = () => {
                setSite("");
                setEmail("");
             }}
-            tabindex="-1"
+            tabIndex="-1"
          >
             <Clear/>
          </IconButton>

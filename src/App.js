@@ -13,8 +13,8 @@ const App = () => {
 		let siteListener
 		const authListener = listenAuth((auth) => {
 			// TODO: reset entire state if user logs in or out !!!
-			if (!auth) return
 			setUser(auth)
+			if (!auth) return
 			siteListener = listenItems(auth.uid, setSiteList)
 		})
 		return () => {
