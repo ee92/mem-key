@@ -17,8 +17,6 @@ const WidgetGeneratedKey = () => {
    const [key] = useGlobal('generatedKey')
    const [showKey, setShowKey] = useGlobal('visibility.generatedKey')
 
-   if (!key || !site || !email || !secret) return null;
-
    const toggleShow = () => setShowKey(!showKey);
    
    const clipboard = () => {
@@ -26,8 +24,18 @@ const WidgetGeneratedKey = () => {
       setCopied(true);
    }
 
+   const hidden = (!key || !site || !email || !secret);
+
    return (
-      <div className={styles.root}>
+      <div
+         className={styles.root}
+         style={{
+            transition: "all 600ms cubic-bezier(0.93, 0.01, 0.33, 1) 0s",
+            opacity: hidden ? 0 : 1,
+            maxHeight: hidden ? '0px' : '200px',
+            overflow: 'hidden'
+         }}
+      >
          <Input
             value={key}
             type={showKey ? "text" : "password"}
