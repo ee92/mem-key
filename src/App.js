@@ -12,7 +12,7 @@ const App = () => {
 	useEffect(() => {
 		let siteListener
 		const authListener = listenAuth((auth) => {
-			// TODO: reset entire state if user logs in or out !!!
+			// TODO: reset entire state if user logs in or out
 			setUser(auth)
 			if (!auth) return
 			siteListener = listenItems(auth.uid, setSiteList)
@@ -24,12 +24,13 @@ const App = () => {
 	// eslint-disable-next-line
 	}, [])
 
+	console.log('app')
 	return (
 		<div>
 			<NavBar/>
 			<Widget/>
 		</div>
 	);
-}
+};
 
 export default App;
