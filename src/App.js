@@ -24,7 +24,6 @@ const App = () => {
 	// eslint-disable-next-line
 	}, [])
 
-	console.log('app')
 	return (
 		<div>
 			<NavBar/>
