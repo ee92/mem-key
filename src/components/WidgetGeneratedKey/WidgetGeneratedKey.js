@@ -33,6 +33,7 @@ const WidgetGeneratedKey = () => {
             transition: "all 600ms cubic-bezier(0.93, 0.01, 0.33, 1) 0s",
             opacity: hidden ? 0 : 1,
             maxHeight: hidden ? '0px' : '200px',
+            padding: hidden && 0,
             overflow: 'hidden'
          }}
       >
