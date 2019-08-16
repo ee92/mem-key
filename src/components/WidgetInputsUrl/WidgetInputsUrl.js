@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
-import useGlobal from '../../api/store'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSite, setEmail } from '../../redux/modules/inputs';
+import { setSettings } from '../../redux/modules/settings';
+import { setPassword } from '../../redux/modules/password';
 import { removeItem } from '../../api/database';
 import styles from './WidgetInputsUrl.module.css';
 import Dropdown from '../../ui/Dropdown';
@@ -10,13 +13,13 @@ import { Dialog } from '@material-ui/core';
 
 
 const WidgetInputsUrl = () => {
-   const [user] = useGlobal('user');
-   const [site, setSite] = useGlobal('inputs.site');
-   const [, setEmail] = useGlobal('inputs.email');
-   const [siteList] = useGlobal('siteList');
-   const [, setSettings] = useGlobal('settings');
-   const [, setKey] = useGlobal('generatedKey');
-   const [showDelete, setShowDelete] = useGlobal('visibility.confirmDelete');
+   const [showDelete, setShowDelete] = useState(false);
+   const dispatch = useDispatch();
+   const {user, site, siteList} = useSelector(state => ({
+      user: state.user,
+      siteList: state.siteList,
+      site: state.inputs.site
+   }));
 
    const existingSite = siteList.find((item) => {
       return item.site.toLowerCase() === site.toLowerCase()
@@ -28,29 +31,29 @@ const WidgetInputsUrl = () => {
 
    useEffect(() => {
       if (existingSite) {
-         setEmail(existingSite.email);
-         setSettings(existingSite.settings);
+         dispatch(setEmail(existingSite.email));
+         dispatch(setSettings(existingSite.settings));
       } else {
-         setKey("")
+         dispatch(setPassword(""))
       }
    // eslint-disable-next-line
    }, [existingSite])
 
    const selectSite = site => {
-      setSite(site.site);
-      setEmail(site.email);
-      setSettings(site.settings);
+      dispatch(setSite(site.site));
+      dispatch(setEmail(site.email));
+      dispatch(setSettings(site.settings));
    }
 
    const handleInput = e => {
       const value = e.target.value;
-      setSite(value);
+      dispatch(setSite(value));
    }
 
    const deleteItem = () => {
       removeItem(user.uid, existingSite.id);
-      setSite("");
-      setEmail("");
+      dispatch(setSite(""));
+      dispatch(setEmail(""));
       setShowDelete(false);
    }
 
@@ -72,8 +75,8 @@ const WidgetInputsUrl = () => {
       return (
          <IconButton
             onClick={() => {
-               setSite("");
-               setEmail("");
+               dispatch(setSite(""));
+               dispatch(setEmail(""));
             }}
             tabIndex="-1"
          >

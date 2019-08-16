@@ -1,31 +1,36 @@
 import React from 'react';
-import useGlobal from '../../api/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSymbols, setUseSymbols } from '../../redux/modules/settings';
 import Input from '../../ui/Input';
 import Switch from '../../ui/Switch';
 import styles from './WidgetSettingsSymbols.module.css';
 
 const WidgetSettingsSymbols = () => {
-   const [usesSymbols, setUsesSymbols] = useGlobal('settings.includeSymbol');
-   const [symbols, setSymbols] = useGlobal('settings.symbols');
 
-   const handleToggle = (e) => setUsesSymbols(e.target.checked);
+   const dispatch = useDispatch();
+   const { useSymbols, symbols } = useSelector(state => ({
+      useSymbols: state.settings.useSymbols,
+      symbols: state.settings.symbols
+   }));
+
+   const handleToggle = (e) => dispatch(setUseSymbols(e.target.checked));
    const handleInput = (e) => {
-      const re = /^[!@#$%^&*?]+$/;
+      const re = /^[!@#$%^&*?+-_<>(){}=]+$/;
       const value = e.target.value;
-      re.test(value) && setSymbols(value);
+      re.test(value) && dispatch(setSymbols(value));
    }
 
    return (
       <div className={styles.root}>
          <Switch
-            checked={usesSymbols}
+            checked={useSymbols}
             onChange={handleToggle}
          />
          <label>Symbols</label>
          <Input
             value={symbols}
             onChange={handleInput}
-            disabled={!usesSymbols}
+            disabled={!useSymbols}
             fullWidth
          />
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
-import useGlobal from '../../api/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSalt, setUseSalt } from '../../redux/modules/settings';
 import { randomWord } from '../../api/generate';
 import Input from '../../ui/Input';
 import Switch from '../../ui/Switch';
@@ -22,20 +23,21 @@ const SaltField = (props) => (
 
 const WidgetSettingsSalt = () => {
 
-   const [useSalt, setUseSalt] = useGlobal('settings.useSalt');
-   const [salt, setSalt] = useGlobal('settings.salt');
+   const dispatch = useDispatch();
+   const { useSalt, salt } = useSelector(state => ({
+      useSalt: state.settings.useSalt,
+      salt: state.settings.salt
+   }));
 
    const createSalt = () => {
-      const word = randomWord()
-      setSalt(word)
+      const word = randomWord();
+      dispatch(setSalt(word));
    }
 
    const toggleSalt = (e) => {
-      const checked = e.target.checked
-      setUseSalt(checked)
-      if (!salt) {
-         createSalt()
-      }
+      const checked = e.target.checked;
+      dispatch(setUseSalt(checked));
+      if (!salt) createSalt();
    }
 
    return (

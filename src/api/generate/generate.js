@@ -38,18 +38,18 @@ export function visualAid(text) {
 export function createKey(site, email, secret, settings) {
 	const {
 		isMemorable,
-		length,
+		numLetters,
 		useSalt,
 		salt,
 		numWords, 
 		symbols, 
-		includeSymbol } = settings
+		useSymbols } = settings
 	
-	const str = site + email + secret + length + numWords + symbols
+	const str = site + email + secret + numLetters + numWords + symbols
 	const saltUsed = useSalt ? salt : ''
 	const hashLength = isMemorable
 		? numWords * 2 - 1
-		: includeSymbol ? length - 1 : length - 1
+		: useSymbols ? numLetters - 1 : numLetters - 1
 	const hash = pbkdf2
 		.pbkdf2Sync(str, saltUsed, 1, hashLength, 'sha512')
 		.toString('hex')
@@ -60,7 +60,7 @@ export function createKey(site, email, secret, settings) {
 		key = appendNumber(key, hash)
 		key = appendSymbol(key, hash, symbols)
 	} else {
-		key = hashToChars(hash, includeSymbol && symbols)
+		key = hashToChars(hash, useSymbols && symbols)
 		key = appendNumber(key, hash)
 	}
 	return key

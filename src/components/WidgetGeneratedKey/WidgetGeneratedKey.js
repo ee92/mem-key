@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useGlobal from '../../api/store';
+import { useSelector } from 'react-redux';
 import { copy } from '../../api/utils';
 import styles from './WidgetGeneratedKey.module.css';
 import Input from '../../ui/Input';
@@ -11,20 +11,30 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 const WidgetGeneratedKey = () => {
    const [copied, setCopied] = useState(false);
-   const [site] = useGlobal('inputs.site');
-   const [email] = useGlobal('inputs.email');
-   const [secret] = useGlobal('inputs.secret');
-   const [key] = useGlobal('generatedKey')
-   const [showKey, setShowKey] = useGlobal('visibility.generatedKey')
+   const [showKey, setShowKey] = useState(false);
+   
+   const props = useSelector(state => ({
+      site: state.inputs.site,
+      email: state.inputs.email,
+      secret: state.inputs.secret,
+      password: state.password
+   }));
 
-   const toggleShow = () => setShowKey(!showKey);
+   const {
+      site,
+      email,
+      secret,
+      password
+   } = props;
+
+   const toggleShow = () => setShowKey(show => !show);
    
    const clipboard = () => {
-      copy(key);
+      copy(password);
       setCopied(true);
    }
 
-   const hidden = (!key || !site || !email || !secret);
+   const hidden = (!password || !site || !email || !secret);
 
    return (
       <div
@@ -38,7 +48,7 @@ const WidgetGeneratedKey = () => {
          }}
       >
          <Input
-            value={key}
+            value={password}
             type={showKey ? "text" : "password"}
             label={"Password for " + site}
             fullWidth

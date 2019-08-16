@@ -1,5 +1,9 @@
 import React from 'react';
-import useGlobal from '../../api/store';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+   setIsMemorable,
+   setNumWords,
+   setNumLetters } from '../../redux/modules/settings';
 import Input from '../../ui/Input';
 import IconButton from '../../ui/IconButton';
 import Switch from '../../ui/Switch';
@@ -14,7 +18,7 @@ const Increment = props => (
       fullWidth
       attach={
          <React.Fragment>
-         <IconButton onClick={props.incDown}>
+            <IconButton onClick={props.incDown}>
                <ExpandMore/>
             </IconButton>
             <IconButton onClick={props.incUp}>
@@ -26,24 +30,27 @@ const Increment = props => (
 )
 
 const WidgetSettingsLength = () => {
+   const dispatch = useDispatch();
+   const props = useSelector(state => ({
+      isMemorable: state.settings.isMemorable,
+      numWords: state.settings.numWords,
+      numLetters: state.settings.numLetters
+   }));
+   const {isMemorable, numWords, numLetters} = props;
 
-   const [memorable, setMemorable] = useGlobal('settings.isMemorable');
-   const [letters, setLetters] = useGlobal('settings.length');
-   const [words, setWords] = useGlobal('settings.numWords');
+   const [num, set] = isMemorable 
+      ? [numWords, setNumWords]
+      : [numLetters, setNumLetters];
+   const label = isMemorable ? 'words' : 'letters';
 
-   const [num, set] = memorable 
-      ? [words, setWords]
-      : [letters, setLetters];
-   const label = memorable ? 'words' : 'letters';
-
-   const incUp = () => set(num + 1);
-   const incDown = () => set(num - 1);
-   const handleToggle = (e) => setMemorable(e.target.checked);
+   const incUp = () => dispatch(set(num + 1));
+   const incDown = () => dispatch(set(num - 1));
+   const handleToggle = (e) => dispatch(setIsMemorable(e.target.checked));
 
    return (
       <div className={styles.root}>
          <Switch
-            checked={memorable}
+            checked={isMemorable}
             onChange={handleToggle}
          />
          <label>Memorizable</label>

@@ -1,4 +1,4 @@
-import {createKey, visualAid} from './generate'
+/* import {createKey, visualAid} from './generate'
 
 
 describe('CREATE PASSWORDS', () => {
@@ -75,6 +75,6 @@ describe('SHOW VISUAL HINT', () => {
 			expect(icon[1]).toBeTruthy()
 		})
 	})
-})
+}) */
 
 

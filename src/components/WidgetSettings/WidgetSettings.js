@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import useGlobal from '../../api/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSettings } from '../../redux/modules/settings';
+import { setPrevSettings } from '../../redux/modules/prevSettings';
+import { setShowSettings } from '../../redux/modules/showSettings';
 import WidgetSettingsLength from '../WidgetSettingsLength';
 import WidgetSettingsSymbols from '../WidgetSettingsSymbols';
 import WidgetSettingsSalt from '../WidgetSettingsSalt';
@@ -10,20 +13,23 @@ import styles from './WidgetSettings.module.css';
 import Dialog from '@material-ui/core/Dialog'
 
 const WidgetSettings = () => {
-   const [settings, setSettings] = useGlobal('settings');
-   const [prevSettings, setPrevSettings] = useGlobal('prevSettings');
-   const [show, setShow] = useGlobal('visibility.settings');
 
+   const dispatch = useDispatch();
+   const { settings, prevSettings, show } = useSelector(state => ({
+      settings: state.settings,
+      prevSettings: state.prevSettings,
+      show: state.showSettings
+   }));
    
    useEffect(() => {
-      if (show) setPrevSettings(settings);
+      if (show) dispatch(setPrevSettings(settings));
       // eslint-disable-next-line
    }, [show]);
 
    const cancel = () => {
-      setSettings(prevSettings);
-      setShow(false);
-   }
+      dispatch(setSettings(prevSettings));
+      dispatch(setShowSettings(false));
+   };
 
    return (
       <Dialog
@@ -41,7 +47,7 @@ const WidgetSettings = () => {
             <WidgetSettingsSalt/>
             <PasswordPreview/>
             <WidgetSettingsControls 
-               save={() => setShow(false)}
+               save={() => dispatch(setShowSettings(false))}
                cancel={cancel}
             />
          </div>

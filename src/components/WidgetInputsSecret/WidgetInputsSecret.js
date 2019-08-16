@@ -1,22 +1,26 @@
-import React from 'react';
-import useGlobal from '../../api/store';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSecret } from '../../redux/modules/inputs';
+import { setVisualHint } from '../../redux/modules/visualHint';
 import { visualAid } from '../../api/generate';
 import Input from '../../ui/Input';
 import VisibilityToggle from '../../ui/VisibiltyToggle';
 import styles from './WidgetInputsSecret.module.css'
 
 const WidgetInputsSecret = () => {
+   const [showSecret, setShowSecret] = useState(false);
+   const dispatch = useDispatch();
+	const { secret, hint } = useSelector(state => ({
+      secret: state.inputs.secret,
+      hint: state.visualHint
+   }));
 
-   const [secret, setSecret] = useGlobal('inputs.secret');
-   const [showSecret, setShowSecret] = useGlobal('visibility.secret');
-   const [hint, setHint] = useGlobal('visualHint');
-
-   const toggleShow = () => setShowSecret(!showSecret);
+   const toggleShow = () => setShowSecret(show => !show);
    const handleInput = (e) => {
       const hintValue = visualAid(e.target.value);
-      setSecret(e.target.value);
-      setHint(hintValue);
-   }
+      dispatch(setSecret(e.target.value));
+      dispatch(setVisualHint(hintValue));
+   };
    
    return (
       <div className={styles.root}>

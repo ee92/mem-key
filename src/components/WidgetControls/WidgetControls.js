@@ -1,53 +1,39 @@
 import React from 'react';
-import useGlobal from '../../api/store';
-import { createKey } from '../../api/generate';
-import { addItem, updateItem } from '../../api/database';
+import { useSelector, useDispatch } from 'react-redux';
+import { generatePassword } from '../../redux/modules/password';
+import { setShowSettings } from '../../redux/modules/showSettings';
 import styles from './WidgetControls.module.css'
 
 import Settings from '@material-ui/icons/Settings';
 
 const WidgetControls = () => {
 
-   const [user] = useGlobal('user');
-   const [{site, email, secret}] = useGlobal('inputs');
-   const [settings] = useGlobal('settings');
-   const [siteList] = useGlobal('siteList');
-   const [, setKey] = useGlobal('generatedKey');
-   const [show, setShow] = useGlobal('visibility.settings');
-
-
-   const findSite = (value) => {
-      return siteList.find((item) => {
-         return item.site.toLowerCase() === value.toLowerCase()
-      });
-   }
-
-   const recordMetaData = () => {
-      if (!user) return;
-      const existingSite = findSite(site);
-      if (existingSite) {
-         updateItem(user.uid, existingSite.id, {site, email, settings});
-      } else {
-         addItem(user.uid, {site, email, settings});
+   const dispatch = useDispatch();
+   const props = useSelector(state => {
+      return {
+         site: state.inputs.site,
+         email: state.inputs.email,
+         secret: state.inputs.secret,
+         showSettings: state.showSettings
       }
-   }
-
-   const generate = () => {
-      if (!site || !email|| !secret) return;
-      const key = createKey(site, email, secret, settings);
-      setKey(key);
-      recordMetaData();
-   }
+   });
+   
+   const {
+      site,
+      email,
+      secret,
+      showSettings
+   } = props;
 
    const toggleSettings = () => {
-      setShow(!show);
+      dispatch(setShowSettings(!showSettings));
    }
 
    return (
       <div className={styles.root}>
          <button
             disabled={!site || !email|| !secret}
-            onClick={generate}
+            onClick={() => dispatch(generatePassword())}
             className={styles.generate}
          >
             Generate

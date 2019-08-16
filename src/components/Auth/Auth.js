@@ -1,11 +1,11 @@
 import React from 'react';
-import useGlobal from '../../api/store';
+import { useSelector } from 'react-redux';
 import { login, logout } from '../../api/auth';
 import Avatar from '../../ui/Avatar';
 import styles from './Auth.module.css';
 
 const Auth = () => {
-	const [user] = useGlobal('user');
+	const user = useSelector(state => state.user);
 	return (
 		<div className={styles.root}>
 			<button
