@@ -7,33 +7,30 @@ import styles from './WidgetControls.module.css'
 import Settings from '@material-ui/icons/Settings';
 
 const WidgetControls = () => {
-
    const dispatch = useDispatch();
-   const props = useSelector(state => {
-      return {
-         site: state.inputs.site,
-         email: state.inputs.email,
-         secret: state.inputs.secret,
-         showSettings: state.showSettings
-      }
-   });
-   
    const {
       site,
       email,
       secret,
       showSettings
-   } = props;
+   } = useSelector(state => ({
+      site: state.inputs.site,
+      email: state.inputs.email,
+      secret: state.inputs.secret,
+      showSettings: state.showSettings
+   }));
 
    const toggleSettings = () => {
       dispatch(setShowSettings(!showSettings));
-   }
+   };
+
+   const createPassword = () => dispatch(generatePassword());
 
    return (
       <div className={styles.root}>
          <button
             disabled={!site || !email|| !secret}
-            onClick={() => dispatch(generatePassword())}
+            onClick={createPassword}
             className={styles.generate}
          >
             Generate

@@ -1,9 +1,9 @@
 import pbkdf2 from 'pbkdf2'
 import md5 from 'md5'
 
-let wordList = ['lame way to make tests pass'];
+let wordList = ['lame way to make tests pass']
 
-fetch('/assets/js/words.json')
+fetch('/assets/words.json')
 .then(data => data.json())
 .then(json => {
 	wordList = json
