@@ -3,11 +3,13 @@ import md5 from 'md5'
 
 let wordList = ['lame way to make tests pass']
 
-fetch('/assets/words.json')
-.then(data => data.json())
-.then(json => {
-	wordList = json
-})
+window.onload = () => {
+	fetch('/assets/words.json')
+	.then(data => data.json())
+	.then(json => {
+		wordList = json
+	})
+}
 
 export function randomWord() {
 	const word = wordList[Math.floor(Math.random() * wordList.length)]
