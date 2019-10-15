@@ -50,7 +50,7 @@ export function createKey(site, email, secret, settings) {
 	const str = site + email + secret + numLetters + numWords + symbols
 	const saltUsed = useSalt ? salt : ''
 	const hashLength = isMemorable
-		? numWords * 2 - 1
+		? numWords * 2 + 3
 		: useSymbols ? numLetters - 1 : numLetters - 1
 	const hash = pbkdf2
 		.pbkdf2Sync(str, saltUsed, 1, hashLength, 'sha512')
