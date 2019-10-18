@@ -1,7 +1,7 @@
 import pbkdf2 from 'pbkdf2'
 import md5 from 'md5'
 
-let wordList = ['lame way to make tests pass']
+let wordList = [];
 
 window.onload = () => {
 	fetch('/assets/words.json')
@@ -49,9 +49,7 @@ export function createKey(site, email, secret, settings) {
 	
 	const str = site + email + secret + numLetters + numWords + symbols
 	const saltUsed = useSalt ? salt : ''
-	const hashLength = isMemorable
-		? numWords * 2 - 1
-		: useSymbols ? numLetters - 1 : numLetters - 1
+	const hashLength = getHashLength(isMemorable, numWords, numLetters, useSymbols)
 	const hash = pbkdf2
 		.pbkdf2Sync(str, saltUsed, 1, hashLength, 'sha512')
 		.toString('hex')
@@ -66,6 +64,17 @@ export function createKey(site, email, secret, settings) {
 		key = appendNumber(key, hash)
 	}
 	return key
+}
+
+function getHashLength(isMemorable, numWords, numLetters, useSymbols) {
+	if (isMemorable) {
+		/*	if (useSymbols) {
+			return numWords * 2 + 2
+		} */
+		return numWords * 2
+	} else {
+		return numLetters - 1
+	}
 }
 
 function hashToWords(hash) {
@@ -86,7 +95,7 @@ function hashToChars(hash, symbols) {
 						 "0123456789" + 
 						 symbols || ""   // add symbols if supplied
 	let key = ''
-	for (let i=0; i<hash.length; i+=2) {
+	for (let i=2; i<hash.length; i+=2) {
 		const hex = hash.slice(i, i + 2)
 		const index = Math.floor(parseInt(hex, 16) / 255 * alfanum.length)
 		const char = alfanum[index]
@@ -96,8 +105,8 @@ function hashToChars(hash, symbols) {
 }
 
 function appendNumber(str, hash) {
-	const hex = hash.slice(0, 1)
-	const number = Math.floor(parseInt(hex, 16) / 16 * 10)
+	const hex = hash.slice(0, 2)
+	const number = Math.floor(parseInt(hex, 16) / 255 * 10)
    return str + number
 }
 
