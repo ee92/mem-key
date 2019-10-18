@@ -37,82 +37,68 @@ export function visualAid(text) {
 	return aid
 }
 
-export function createKey(site, email, secret, settings) {
-	const {
-		isMemorable,
-		numLetters,
-		useSalt,
-		salt,
-		numWords, 
-		symbols, 
-		useSymbols } = settings
-	
-	const str = site + email + secret + numLetters + numWords + symbols
-	const saltUsed = useSalt ? salt : ''
-	const hashLength = getHashLength(isMemorable, numWords, numLetters, useSymbols)
-	const hash = pbkdf2
-		.pbkdf2Sync(str, saltUsed, 1, hashLength, 'sha512')
-		.toString('hex')
-	
-	let key
-	if (isMemorable) {
-		key = hashToWords(hash)
-		key = appendNumber(key, hash)
-		key = appendSymbol(key, hash, symbols)
+export function generatePassword(inputs, settings) {	
+	const hash = createHash(inputs, settings);
+	if (settings.isMemorable) {
+		return createMemorablePassword(hash, settings);
 	} else {
-		key = hashToChars(hash, useSymbols && symbols)
-		key = appendNumber(key, hash)
+		return createScrambledPassword(hash, settings);
 	}
-	return key
 }
 
-function getHashLength(isMemorable, numWords, numLetters, useSymbols) {
+function createHash(inputs, settings) {
+	const str = inputs.site + inputs.email + inputs.secret + settings.useSymbols + settings.symbols + settings.numWords + settings.numLetters;
+	const salt = settings.useSalt ? settings.salt : '';
+	const length = getHashLength(settings);
+	return pbkdf2
+		.pbkdf2Sync(str, salt, 1, length, 'sha512')
+		.toString('hex');
+}
+
+function getHashLength({isMemorable, numWords, numLetters, useSymbols}) {
 	if (isMemorable) {
-		/*	if (useSymbols) {
+		if (useSymbols) {
 			return numWords * 2 + 2
-		} */
-		return numWords * 2
-	} else {
-		return numLetters - 1
+		}
+		return numWords * 2 + 1
 	}
+	return numLetters + 1
 }
 
-function hashToWords(hash) {
-	let key = ''
-	for (let i=0; i<hash.length; i+=4) {
-		const hex = hash.slice(i, i + 4)
-		const index = Math.floor(parseInt(hex, 16) / 65535 * wordList.length)
-		let word = wordList[index]
-		word = word.charAt(0).toUpperCase() + word.slice(1)
-		key += word
+function createMemorablePassword(hash, settings) {
+	let password = '';
+	let usedHash = 0;
+	for (let i=0; i<settings.numWords; i++) {
+		usedHash = (i * 4) + 4
+		const hashSlice = hash.slice(i * 4, usedHash);
+		const wordIndex = Math.floor(parseInt(hashSlice, 16) / 65535 * wordList.length);
+		let word = wordList[wordIndex];
+		word = word.charAt(0).toUpperCase() + word.slice(1);
+		password += word;
 	}
-	return key
+	const hashSlice = hash.slice(usedHash, usedHash += 2);
+	const number = Math.floor(parseInt(hashSlice, 16) / 255 * 10);
+	password += number;
+	if (settings.useSymbols) {
+		const hashSlice = hash.slice(usedHash, usedHash += 2);
+		const symbolIndex = Math.floor(parseInt(hashSlice, 16) / 255 * settings.symbols.length);
+		const symbol = settings.symbols.charAt(symbolIndex);
+		password += symbol;
+	}
+	return password;
 }
 
-function hashToChars(hash, symbols) {
+function createScrambledPassword(hash, settings) {
 	const alfanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
 						 "abcdefghijklmnopqrstuvwxyz" +
 						 "0123456789" + 
-						 symbols || ""   // add symbols if supplied
-	let key = ''
+						 settings.symbols || '';
+	let password = '';
 	for (let i=2; i<hash.length; i+=2) {
-		const hex = hash.slice(i, i + 2)
-		const index = Math.floor(parseInt(hex, 16) / 255 * alfanum.length)
-		const char = alfanum[index]
-		key += char
+		const hashSlice = hash.slice(i, i + 2);
+		const index = Math.floor(parseInt(hashSlice, 16) / 255 * alfanum.length);
+		const char = alfanum[index];
+		password += char;
 	}
-	return key
-}
-
-function appendNumber(str, hash) {
-	const hex = hash.slice(0, 2)
-	const number = Math.floor(parseInt(hex, 16) / 255 * 10)
-   return str + number
-}
-
-function appendSymbol(str, hash, symbols) {
-	const hex = hash.slice(0, 2)
-	const index = Math.floor(parseInt(hex, 16) / 255 * symbols.length)
-	const symbol = symbols.charAt(index)
-	return str + symbol
+	return password;
 }

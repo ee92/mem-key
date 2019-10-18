@@ -1,4 +1,4 @@
-import { createKey } from '../../api/generate';
+import { generatePassword } from '../../api/generate';
 
 const settingsActionTypes = [
    'SET_IS_MEMORABLE',
@@ -32,7 +32,7 @@ export const passwordPreviewGenerator = (store) => next => action => {
       const {inputs, settings} = store.getState();
       const {site, email, secret} = inputs;
       if (!site || !email|| !secret) return;
-      const password = createKey(site, email, secret, settings);
+      const password = generatePassword(inputs, settings);
       store.dispatch(setPasswordPreview(password));
    }
 };

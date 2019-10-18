@@ -1,4 +1,4 @@
-import { createKey } from '../../api/generate';
+import { generatePassword as _generatePassword } from '../../api/generate';
 import { addItem, updateItem } from '../../api/database';
 
 export const setPassword = (payload) => ({
@@ -26,7 +26,7 @@ export const passwordGenerator = ({dispatch, getState}) => next => action => {
       const {site, email, secret} = inputs;
       const createPassword = () => {
          if (!site || !email|| !secret) return;
-         const password = createKey(site, email, secret, settings);
+         const password = _generatePassword(inputs, settings);
          dispatch(setPassword(password));
       };
       const recordSettings = () => {
