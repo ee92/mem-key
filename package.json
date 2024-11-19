@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.2.0",
     "@material-ui/icons": "^4.2.1",
-    "firebase": "^6.1.0",
+    "firebase": "^10.9.0",
     "material-ui-toggle-icon": "^1.0.6",
     "md5": "^2.2.1",
     "pbkdf2": "^3.0.17",
